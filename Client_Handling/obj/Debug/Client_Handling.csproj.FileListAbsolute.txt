@@ -1,0 +1,9 @@
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\obj\Debug\Client_Handling.csprojAssemblyReference.cache
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\obj\Debug\Client_Handling.Properties.Resources.resources
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\obj\Debug\Client_Handling.csproj.GenerateResource.cache
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\obj\Debug\Client_Handling.csproj.CoreCompileInputs.cache
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\bin\Debug\Client_Handling.exe.config
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\bin\Debug\Client_Handling.exe
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\bin\Debug\Client_Handling.pdb
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\obj\Debug\Client_Handling.exe
+D:\bin\Study\Y2\HK2\Network\Project\Socket\Client_Handling\obj\Debug\Client_Handling.pdb

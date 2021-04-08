@@ -45,8 +45,7 @@
             this.categories_pic = new System.Windows.Forms.PictureBox();
             this.button_categories = new System.Windows.Forms.Button();
             this.Discription_categories = new System.Windows.Forms.Label();
-            this.Main_option = new System.Windows.Forms.Panel();
-            this.BacK_childForm = new System.Windows.Forms.Button();
+            this.sign_in_up1 = new Client_Handling.Forms.Sign_in_up();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -54,7 +53,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.exit)).BeginInit();
             this.categories.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.categories_pic)).BeginInit();
-            this.Main_option.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -280,32 +278,12 @@
             this.Discription_categories.MouseEnter += new System.EventHandler(this.categories_MouseEnter);
             this.Discription_categories.MouseLeave += new System.EventHandler(this.categories_MouseLeave);
             // 
-            // Main_option
+            // sign_in_up1
             // 
-            this.Main_option.Controls.Add(this.BacK_childForm);
-            this.Main_option.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Main_option.Location = new System.Drawing.Point(0, 130);
-            this.Main_option.Name = "Main_option";
-            this.Main_option.Size = new System.Drawing.Size(892, 590);
-            this.Main_option.TabIndex = 2;
-            // 
-            // BacK_childForm
-            // 
-            this.BacK_childForm.BackColor = System.Drawing.Color.Transparent;
-            this.BacK_childForm.BackgroundImage = global::Client_Handling.Properties.Resources.exit_nocolor;
-            this.BacK_childForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BacK_childForm.FlatAppearance.BorderSize = 0;
-            this.BacK_childForm.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.BacK_childForm.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.BacK_childForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BacK_childForm.Location = new System.Drawing.Point(5, 5);
-            this.BacK_childForm.Name = "BacK_childForm";
-            this.BacK_childForm.Size = new System.Drawing.Size(40, 40);
-            this.BacK_childForm.TabIndex = 0;
-            this.BacK_childForm.UseVisualStyleBackColor = false;
-            this.BacK_childForm.Click += new System.EventHandler(this.Back_Click);
-            this.BacK_childForm.MouseEnter += new System.EventHandler(this.Back_MouseEnter);
-            this.BacK_childForm.MouseLeave += new System.EventHandler(this.Back_MouseLeave);
+            this.sign_in_up1.Location = new System.Drawing.Point(262, 237);
+            this.sign_in_up1.Name = "sign_in_up1";
+            this.sign_in_up1.Size = new System.Drawing.Size(481, 387);
+            this.sign_in_up1.TabIndex = 1;
             // 
             // Form1
             // 
@@ -314,7 +292,7 @@
             this.BackgroundImage = global::Client_Handling.Properties.Resources.wallpaperflare_com_wallpaper;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1280, 720);
-            this.Controls.Add(this.Main_option);
+            this.Controls.Add(this.sign_in_up1);
             this.Controls.Add(this.categories);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -330,7 +308,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.exit)).EndInit();
             this.categories.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.categories_pic)).EndInit();
-            this.Main_option.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -352,9 +329,7 @@
         private System.Windows.Forms.Label Discription_categories;
         private System.Windows.Forms.PictureBox categories_pic;
         private System.Windows.Forms.Button Login;
-        private System.Windows.Forms.Panel Main_option;
-        private System.Windows.Forms.Button BacK_childForm;
-
+        private Forms.Sign_in_up sign_in_up1;
     }
 }
 

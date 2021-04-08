@@ -36,7 +36,7 @@ namespace ServerHandling.Database
             #endregion
         }
 
-        public bool InsertNewUser(User user)
+        public bool InsertNewUser(CommonResource.User user)
         {
             //Hash password to byte[16] by MD5 algorithm
             using (var md5 = MD5.Create())

@@ -9,16 +9,6 @@ using System.Threading;
 
 namespace Client_Handling
 {
-    public interface Req
-    {
-        string Request { get; set; }
-    }
-    class User   {
-        public string UserName { set; get; } public string Password { set; get; }
-        public User(string user, string pass) { UserName = user; Password = pass; }
-        
-    }
-
     class StateObject
     {
         public Socket workSocket = null;
@@ -93,7 +83,7 @@ namespace Client_Handling
         }
         public void connect()
         {
-            try { client_socket.Connect(IPAddress.Parse("10.124.1.107"), 11111); } 
+            try { client_socket.Connect(IPAddress.Parse("10.124.6.205"), 11111); } 
             catch (SocketException e) { OnShow?.Invoke(e.Message); }
         }
         public void send_data(string req)
@@ -107,6 +97,18 @@ namespace Client_Handling
             StateObject state = new StateObject();
             state.workSocket = client_socket;
             client_socket.BeginReceive(state.buffer,0,StateObject.BufferSize, SocketFlags.None, new AsyncCallback(OnDataReceived), null);
+        }
+
+        public void sign_up(string username, string pass)
+        {
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SIGN_UP);
+            send_data(req);
+        }
+
+        public void sign_in(string username, string pass)
+        {
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SIGN_IN);
+            send_data(req);
         }
 
     }

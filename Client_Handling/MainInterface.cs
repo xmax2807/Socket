@@ -14,14 +14,21 @@ namespace Client_Handling
     {
         private Time_Client_Manager client = new Time_Client_Manager();
         private Form active_form;
-        private User par;
+
         public Form1()
         {
             InitializeComponent();
-            BacK_childForm.Visible = false;
-            this.Main_option.Visible = false;
+            SignUp();
+            SignIn();
         }
-
+        public void SignUp()
+        {
+            sign_in_up1.OnSignup += (u) => client.sign_up(u.UserName, u.Password);
+        }
+        public void SignIn()
+        {
+            sign_in_up1.SignIn += (u) => client.sign_in(u.UserName, u.Password);
+        }
         private void Search_box_focus(object sender, EventArgs e)
         {
             if (this.textBox1.Text.Equals("Type here to search"))
@@ -123,24 +130,7 @@ namespace Client_Handling
         {
             this.categories.Hide();
         }
-        private void Create_loginForm(Form ChildForm, object sender)
-        {
-            if (active_form != null)
-                active_form.Close();
-            this.Main_option.Visible = true;
-            active_form = ChildForm;
-            ChildForm.TopLevel = false;
-            ChildForm.FormBorderStyle = FormBorderStyle.None;
-            ChildForm.Dock = DockStyle.Fill;
 
-            this.Main_option.Controls.Add(ChildForm);
-            this.Main_option.Tag = ChildForm;
-            ChildForm.Show();
-            ChildForm.BringToFront();
-            BacK_childForm.Visible = true;
-            BacK_childForm.BringToFront();
-
-        }
         private void Login_MouseEnter(object sender, EventArgs e)
         {
             this.Login.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -155,12 +145,12 @@ namespace Client_Handling
         private void Login_Click(object sender, EventArgs e)
         {
             HideAll(sender);
-            //Create_loginForm(new Forms.Login(), sender);
+
         }
 
         private void Got_info(object sender, EventArgs e)
         {
-            
+
         }
         //
 
@@ -174,19 +164,9 @@ namespace Client_Handling
             if (active_form != null)
                 active_form.Close();
             Show_Back(sender);
-            BacK_childForm.Visible = false;
-            this.Main_option.Visible = false;
         }
 
-        private void Back_MouseEnter(object sender, EventArgs e)
-        {
-            this.BacK_childForm.BackgroundImage = global::Client_Handling.Properties.Resources.exit_color;
-        }
-
-        private void Back_MouseLeave(object sender, EventArgs e)
-        {
-            this.BacK_childForm.BackgroundImage = global::Client_Handling.Properties.Resources.exit_nocolor;
-        }
+    
         //
     }
 }

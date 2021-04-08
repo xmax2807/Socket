@@ -91,7 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\AzureBlobs\BlobsManager.cs" />
-    <Compile Include="Database\User.cs" />
+    <Compile Include="HandleSocket\UserServerRequest.cs" />
     <Compile Include="Database\Book.cs" />
     <Compile Include="Database\SQL\SQLServerManager.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
@@ -128,7 +128,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HandleSocket\ServerSocketManager.cs" />
-    <Compile Include="Requests.cs" />
+    <Compile Include="Request\UserRequest.cs" />
     <EmbeddedResource Include="Forms\Components\AddBookControl.resx">
       <DependentUpon>AddBookControl.cs</DependentUpon>
     </EmbeddedResource>

@@ -3,6 +3,7 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 using System.Collections.Generic;
+using CommonResource;
 
 namespace ServerHandling
 {
@@ -21,6 +22,8 @@ namespace ServerHandling
         private readonly byte[] buffer = new byte[bufferSize];
 
         public event System.Action<string> OnConnected;
+
+        public event Action<User> OnSignupUser;
 
         private readonly Database.DatabaseManager databaseManager;
 
@@ -109,10 +112,37 @@ namespace ServerHandling
 
             Array.Copy(buffer, tempBufffer, requestSize);
 
-            var request = Encoding.ASCII.GetString(tempBufffer);
+            HandleRequest(Encoding.ASCII.GetString(tempBufffer));
         }
 
+        public void HandleRequest(string request)
+        {
+            var parts = request.Split('_');
+            var cmd = parts[0]; //Define the command
+            var json = parts[1];
+            switch ((TypeOfRequest)Enum.Parse(typeof(TypeOfRequest), cmd))
+            {
+                case TypeOfRequest.SIGN_UP:
+                    HandleSignup(json);
+                    break;
+                case TypeOfRequest.SIGN_IN:
+                    break;
+                default:
+                    break;
+            }
+        }
 
+        public void HandleSignup(string json)
+        {
+            User user = UserServerRequest.DeseralizeUser(json);
+            OnConnected?.Invoke(user.UserName);
+        }
+
+        public void HandleSignin(string json)
+        {
+            User user = UserServerRequest.DeseralizeUser(json);
+            OnConnected?.Invoke(user.UserName);
+        }
 
         public void DisconnectServer()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using CommonResource;
 using System.Net;
 using System.Windows.Forms;
 
@@ -10,6 +11,7 @@ namespace ServerHandling
         private readonly Database.DatabaseManager databaseManager = new Database.DatabaseManager();
 
         private readonly ServerSocketManager serverSocketManager = new ServerSocketManager();
+
 
         public ServerInterface()
         {
@@ -68,10 +70,10 @@ namespace ServerHandling
         #endregion
 
         #region USER
-        public void AddUser(Database.User user)
+        public void AddUser(User user)
         {
-
         }
+
 
         #endregion
     }

@@ -18,7 +18,7 @@ namespace CommonResource
 
     public enum TypeOfRequest
     {
-        SIGN_UP, SIGN_IN
+        SignUp, SignIn, SearchBooksByID, SearchBooksByName, Error
     }
     
 }

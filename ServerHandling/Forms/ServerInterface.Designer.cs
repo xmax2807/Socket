@@ -30,193 +30,253 @@
         {
             System.Windows.Forms.Panel panel3;
             System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-            this.addBookButton = new System.Windows.Forms.Button();
-            this.deleteBookButton = new System.Windows.Forms.Button();
-            this.userInformationButton = new System.Windows.Forms.Button();
-            this.serverInformationButton = new System.Windows.Forms.Button();
+            System.Windows.Forms.Panel mainPanel;
+            this.openAddBookButton = new System.Windows.Forms.Button();
+            this.openDeleteBookButton = new System.Windows.Forms.Button();
+            this.openUserInformationButton = new System.Windows.Forms.Button();
+            this.openServerInformationButton = new System.Windows.Forms.Button();
+            this.serverInformationControl = new ServerHandling.Controls.ServerInformationControl();
+            this.deleteBookControl = new ServerHandling.Controls.DeleteBookControl();
+            this.addBookControl = new ServerHandling.Controls.AddBookControl();
+            this.userInformationControl = new ServerHandling.Controls.UserInformationControl();
             this.newBook = new System.Windows.Forms.OpenFileDialog();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.serverInformationControl = new ServerHandling.Forms.ServerInformationControl();
+            this.nameOfCurrentFunctionBox = new System.Windows.Forms.TextBox();
+            this.hideProgramButton = new System.Windows.Forms.Button();
+            this.closeProgramButton = new System.Windows.Forms.Button();
             panel3 = new System.Windows.Forms.Panel();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            mainPanel = new System.Windows.Forms.Panel();
             flowLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            mainPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel3
             // 
             panel3.BackColor = System.Drawing.Color.MediumBlue;
-            panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            panel3.Dock = System.Windows.Forms.DockStyle.Left;
             panel3.Enabled = false;
             panel3.Location = new System.Drawing.Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new System.Drawing.Size(227, 100);
+            panel3.Size = new System.Drawing.Size(200, 60);
             panel3.TabIndex = 0;
             // 
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.BackColor = System.Drawing.SystemColors.HotTrack;
-            flowLayoutPanel1.Controls.Add(this.addBookButton);
-            flowLayoutPanel1.Controls.Add(this.deleteBookButton);
-            flowLayoutPanel1.Controls.Add(this.userInformationButton);
-            flowLayoutPanel1.Controls.Add(this.serverInformationButton);
+            flowLayoutPanel1.Controls.Add(this.openAddBookButton);
+            flowLayoutPanel1.Controls.Add(this.openDeleteBookButton);
+            flowLayoutPanel1.Controls.Add(this.openUserInformationButton);
+            flowLayoutPanel1.Controls.Add(this.openServerInformationButton);
             flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-            flowLayoutPanel1.Location = new System.Drawing.Point(0, 100);
+            flowLayoutPanel1.Location = new System.Drawing.Point(0, 60);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 50, 0, 0);
-            flowLayoutPanel1.Size = new System.Drawing.Size(227, 541);
-            flowLayoutPanel1.TabIndex = 1;
+            flowLayoutPanel1.Size = new System.Drawing.Size(200, 500);
+            flowLayoutPanel1.TabIndex = 2;
             // 
-            // addBookButton
+            // openAddBookButton
             // 
-            this.addBookButton.BackColor = System.Drawing.Color.Transparent;
-            this.addBookButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.addBookButton.FlatAppearance.BorderSize = 0;
-            this.addBookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addBookButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addBookButton.Location = new System.Drawing.Point(3, 53);
-            this.addBookButton.Name = "addBookButton";
-            this.addBookButton.Size = new System.Drawing.Size(215, 60);
-            this.addBookButton.TabIndex = 0;
-            this.addBookButton.Text = "Thêm Sách";
-            this.addBookButton.UseVisualStyleBackColor = false;
+            this.openAddBookButton.BackColor = System.Drawing.Color.Transparent;
+            this.openAddBookButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.openAddBookButton.FlatAppearance.BorderSize = 0;
+            this.openAddBookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.openAddBookButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openAddBookButton.Location = new System.Drawing.Point(3, 53);
+            this.openAddBookButton.Name = "openAddBookButton";
+            this.openAddBookButton.Size = new System.Drawing.Size(197, 60);
+            this.openAddBookButton.TabIndex = 0;
+            this.openAddBookButton.Text = "Thêm Sách";
+            this.openAddBookButton.UseVisualStyleBackColor = false;
+            this.openAddBookButton.Click += new System.EventHandler(this.OpenAddBookPanelButton_Click);
             // 
-            // deleteBookButton
+            // openDeleteBookButton
             // 
-            this.deleteBookButton.BackColor = System.Drawing.Color.Transparent;
-            this.deleteBookButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.deleteBookButton.FlatAppearance.BorderSize = 0;
-            this.deleteBookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.deleteBookButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteBookButton.Location = new System.Drawing.Point(3, 119);
-            this.deleteBookButton.Name = "deleteBookButton";
-            this.deleteBookButton.Size = new System.Drawing.Size(215, 60);
-            this.deleteBookButton.TabIndex = 1;
-            this.deleteBookButton.Text = "Xóa Sách";
-            this.deleteBookButton.UseVisualStyleBackColor = false;
+            this.openDeleteBookButton.BackColor = System.Drawing.Color.Transparent;
+            this.openDeleteBookButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.openDeleteBookButton.FlatAppearance.BorderSize = 0;
+            this.openDeleteBookButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.openDeleteBookButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openDeleteBookButton.Location = new System.Drawing.Point(3, 119);
+            this.openDeleteBookButton.Name = "openDeleteBookButton";
+            this.openDeleteBookButton.Size = new System.Drawing.Size(197, 60);
+            this.openDeleteBookButton.TabIndex = 1;
+            this.openDeleteBookButton.Text = "Xóa Sách";
+            this.openDeleteBookButton.UseVisualStyleBackColor = false;
+            this.openDeleteBookButton.Click += new System.EventHandler(this.OpenDeleteBookButton_Click);
             // 
-            // userInformationButton
+            // openUserInformationButton
             // 
-            this.userInformationButton.BackColor = System.Drawing.Color.Transparent;
-            this.userInformationButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.userInformationButton.FlatAppearance.BorderSize = 0;
-            this.userInformationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.userInformationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userInformationButton.Location = new System.Drawing.Point(3, 185);
-            this.userInformationButton.Name = "userInformationButton";
-            this.userInformationButton.Size = new System.Drawing.Size(215, 60);
-            this.userInformationButton.TabIndex = 2;
-            this.userInformationButton.Text = "Thông Tin Người Dùng";
-            this.userInformationButton.UseVisualStyleBackColor = false;
+            this.openUserInformationButton.BackColor = System.Drawing.Color.Transparent;
+            this.openUserInformationButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.openUserInformationButton.FlatAppearance.BorderSize = 0;
+            this.openUserInformationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.openUserInformationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openUserInformationButton.Location = new System.Drawing.Point(3, 185);
+            this.openUserInformationButton.Name = "openUserInformationButton";
+            this.openUserInformationButton.Size = new System.Drawing.Size(197, 60);
+            this.openUserInformationButton.TabIndex = 2;
+            this.openUserInformationButton.Text = "Thông Tin Người Dùng";
+            this.openUserInformationButton.UseVisualStyleBackColor = false;
+            this.openUserInformationButton.Click += new System.EventHandler(this.OpenUserInformationButton_Click);
             // 
-            // serverInformationButton
+            // openServerInformationButton
             // 
-            this.serverInformationButton.BackColor = System.Drawing.Color.Gray;
-            this.serverInformationButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.serverInformationButton.FlatAppearance.BorderSize = 0;
-            this.serverInformationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.serverInformationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serverInformationButton.Location = new System.Drawing.Point(3, 251);
-            this.serverInformationButton.Name = "serverInformationButton";
-            this.serverInformationButton.Size = new System.Drawing.Size(224, 60);
-            this.serverInformationButton.TabIndex = 3;
-            this.serverInformationButton.Text = "Thông Tin Server";
-            this.serverInformationButton.UseVisualStyleBackColor = false;
+            this.openServerInformationButton.BackColor = System.Drawing.Color.Transparent;
+            this.openServerInformationButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.openServerInformationButton.FlatAppearance.BorderSize = 0;
+            this.openServerInformationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.openServerInformationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openServerInformationButton.Location = new System.Drawing.Point(3, 251);
+            this.openServerInformationButton.Name = "openServerInformationButton";
+            this.openServerInformationButton.Size = new System.Drawing.Size(197, 60);
+            this.openServerInformationButton.TabIndex = 3;
+            this.openServerInformationButton.Text = "Thông Tin Server";
+            this.openServerInformationButton.UseVisualStyleBackColor = false;
+            this.openServerInformationButton.Click += new System.EventHandler(this.OpenServerInformationButton_Click);
             // 
-            // panel2
+            // mainPanel
             // 
-            this.panel2.Controls.Add(flowLayoutPanel1);
-            this.panel2.Controls.Add(panel3);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(227, 641);
-            this.panel2.TabIndex = 8;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(227, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(799, 41);
-            this.panel1.TabIndex = 9;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(649, 0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 41);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "-";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.Red;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(724, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 41);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "X";
-            this.button1.UseVisualStyleBackColor = false;
+            mainPanel.Controls.Add(this.serverInformationControl);
+            mainPanel.Controls.Add(this.deleteBookControl);
+            mainPanel.Controls.Add(this.addBookControl);
+            mainPanel.Controls.Add(this.userInformationControl);
+            mainPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            mainPanel.Location = new System.Drawing.Point(200, 60);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Size = new System.Drawing.Size(800, 500);
+            mainPanel.TabIndex = 14;
             // 
             // serverInformationControl
             // 
             this.serverInformationControl.BackColor = System.Drawing.Color.White;
-            this.serverInformationControl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.serverInformationControl.Location = new System.Drawing.Point(226, 41);
+            this.serverInformationControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.serverInformationControl.Location = new System.Drawing.Point(0, 0);
             this.serverInformationControl.Name = "serverInformationControl";
-            this.serverInformationControl.Size = new System.Drawing.Size(800, 600);
-            this.serverInformationControl.TabIndex = 10;
+            this.serverInformationControl.Size = new System.Drawing.Size(800, 500);
+            this.serverInformationControl.TabIndex = 2;
+            // 
+            // deleteBookControl
+            // 
+            this.deleteBookControl.BackColor = System.Drawing.Color.White;
+            this.deleteBookControl.Location = new System.Drawing.Point(0, 0);
+            this.deleteBookControl.Name = "deleteBookControl";
+            this.deleteBookControl.Size = new System.Drawing.Size(800, 500);
+            this.deleteBookControl.TabIndex = 1;
+            // 
+            // addBookControl
+            // 
+            this.addBookControl.BackColor = System.Drawing.Color.White;
+            this.addBookControl.Location = new System.Drawing.Point(0, 0);
+            this.addBookControl.Name = "addBookControl";
+            this.addBookControl.Size = new System.Drawing.Size(800, 500);
+            this.addBookControl.TabIndex = 0;
+            // 
+            // userInformationControl
+            // 
+            this.userInformationControl.BackColor = System.Drawing.Color.White;
+            this.userInformationControl.Location = new System.Drawing.Point(0, 0);
+            this.userInformationControl.Name = "userInformationControl";
+            this.userInformationControl.Size = new System.Drawing.Size(800, 500);
+            this.userInformationControl.TabIndex = 3;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.panel1.Controls.Add(this.nameOfCurrentFunctionBox);
+            this.panel1.Controls.Add(this.hideProgramButton);
+            this.panel1.Controls.Add(panel3);
+            this.panel1.Controls.Add(this.closeProgramButton);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1000, 60);
+            this.panel1.TabIndex = 9;
+            // 
+            // nameOfCurrentFunctionBox
+            // 
+            this.nameOfCurrentFunctionBox.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.nameOfCurrentFunctionBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.nameOfCurrentFunctionBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.nameOfCurrentFunctionBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.nameOfCurrentFunctionBox.Enabled = false;
+            this.nameOfCurrentFunctionBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameOfCurrentFunctionBox.Location = new System.Drawing.Point(200, 31);
+            this.nameOfCurrentFunctionBox.Name = "nameOfCurrentFunctionBox";
+            this.nameOfCurrentFunctionBox.Size = new System.Drawing.Size(800, 29);
+            this.nameOfCurrentFunctionBox.TabIndex = 14;
+            this.nameOfCurrentFunctionBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // hideProgramButton
+            // 
+            this.hideProgramButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.hideProgramButton.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.hideProgramButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hideProgramButton.Location = new System.Drawing.Point(900, 0);
+            this.hideProgramButton.Name = "hideProgramButton";
+            this.hideProgramButton.Size = new System.Drawing.Size(50, 35);
+            this.hideProgramButton.TabIndex = 1;
+            this.hideProgramButton.Text = "-";
+            this.hideProgramButton.UseVisualStyleBackColor = false;
+            this.hideProgramButton.Click += new System.EventHandler(this.HideProgramButton_Click);
+            // 
+            // closeProgramButton
+            // 
+            this.closeProgramButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.closeProgramButton.BackColor = System.Drawing.Color.Red;
+            this.closeProgramButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.closeProgramButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.closeProgramButton.Location = new System.Drawing.Point(950, 0);
+            this.closeProgramButton.Name = "closeProgramButton";
+            this.closeProgramButton.Size = new System.Drawing.Size(50, 35);
+            this.closeProgramButton.TabIndex = 0;
+            this.closeProgramButton.Text = "X";
+            this.closeProgramButton.UseVisualStyleBackColor = false;
+            this.closeProgramButton.Click += new System.EventHandler(this.CloseProgramButton_Click);
             // 
             // ServerInterface
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1026, 641);
-            this.Controls.Add(this.serverInformationControl);
+            this.ClientSize = new System.Drawing.Size(1000, 560);
+            this.Controls.Add(flowLayoutPanel1);
+            this.Controls.Add(mainPanel);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(1026, 641);
-            this.MinimumSize = new System.Drawing.Size(1026, 641);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1000, 560);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(1000, 560);
             this.Name = "ServerInterface";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Server";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             flowLayoutPanel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
+            mainPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.OpenFileDialog newBook;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button addBookButton;
-        private System.Windows.Forms.Button deleteBookButton;
-        private System.Windows.Forms.Button userInformationButton;
-        private System.Windows.Forms.Button serverInformationButton;
+        private System.Windows.Forms.Button openAddBookButton;
+        private System.Windows.Forms.Button openDeleteBookButton;
+        private System.Windows.Forms.Button openUserInformationButton;
+        private System.Windows.Forms.Button openServerInformationButton;
         private System.Windows.Forms.Panel panel1;
-        private Forms.ServerInformationControl serverInformationControl;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button hideProgramButton;
+        private System.Windows.Forms.Button closeProgramButton;
+        private System.Windows.Forms.TextBox nameOfCurrentFunctionBox;
+        private Controls.UserInformationControl userInformationControl;
+        private Controls.ServerInformationControl serverInformationControl;
+        private Controls.DeleteBookControl deleteBookControl;
+        private Controls.AddBookControl addBookControl;
     }
 }
 

@@ -117,6 +117,11 @@ namespace ServerHandling
             HandleRequest(Encoding.ASCII.GetString(tempBufffer));
         }
 
+        public void SendDataToClient()
+        {
+
+        }
+
         public void HandleRequest(string request)
         {
             var result = UserServerRequest.HandleRequest(request);
@@ -167,7 +172,16 @@ namespace ServerHandling
 
         public void HandleSignIn(User user)
         {
-            OnPrintMessage?.Invoke(user.UserName);
+            var result = databaseManager.CheckLogin(user);
+
+            if (result)
+            {
+                OnServerActivity?.Invoke(user.UserName + " đã đăng nhập tài khoản thành công");
+            }
+            else
+            {
+                OnServerActivity?.Invoke(user.UserName + " đã đăng nhập tài khoản thất bại");
+            }
         }
 
         public void DisconnectServer()

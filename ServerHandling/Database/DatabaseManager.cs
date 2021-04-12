@@ -71,5 +71,14 @@ namespace ServerHandling.Database
                 return sqlManager.InsertNewUser(user.UserName, ePassword);
             }
         }
+
+        public bool CheckLogin(CommonResource.User user)
+        {
+            using (var md5 = MD5.Create())
+            {
+                var ePassword = md5.ComputeHash(Encoding.ASCII.GetBytes(user.Password));
+                return sqlManager.CheckUserLogin(user.UserName, ePassword);
+            }
+        }
     }
 }

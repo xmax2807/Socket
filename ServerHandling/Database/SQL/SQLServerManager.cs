@@ -81,5 +81,41 @@ namespace ServerHandling.Database
                 return false;
             }
         }
+
+        public bool CheckUserLogin(string userName, byte[] password)
+        {
+            try
+            {
+                sqlConnection.Open();
+
+                using (var command = new SqlCommand
+                {
+                    CommandText = "CHECKUSER",
+                    Connection = sqlConnection,
+                    //Use stored procedure
+                    CommandType = System.Data.CommandType.StoredProcedure
+                })
+                {
+                    //Add values to parameters
+                    command.Parameters.AddWithValue("@user_name", userName);
+                    command.Parameters.AddWithValue("@pass_word", password);
+
+                    //Excute the command
+                    //Check user exists
+                    var result = command.ExecuteScalar();
+
+                    sqlConnection.Close();
+
+                    if (result != null)
+                        return true;
+                    return false;
+                }
+            }//If a user exist already or run into an error
+            catch (SqlException)
+            {
+                sqlConnection.Close();
+                return false;
+            }
+        }
     }
 }

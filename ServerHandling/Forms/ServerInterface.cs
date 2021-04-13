@@ -9,13 +9,15 @@ namespace ServerHandling
 {
     public partial class ServerInterface : Form
     {
-        private readonly Database.DatabaseManager databaseManager = new Database.DatabaseManager();
+        private readonly Database.DatabaseManager databaseManager;
 
-        private readonly ServerSocketManager serverSocketManager = new ServerSocketManager();
+        private readonly ServerSocketManager serverSocketManager;
 
 
         public ServerInterface()
         {
+            databaseManager = new Database.DatabaseManager();
+            serverSocketManager = new ServerSocketManager(databaseManager);
             InitializeComponent();
             SetupReferences();
         }

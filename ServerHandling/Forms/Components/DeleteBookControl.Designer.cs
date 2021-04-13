@@ -1,4 +1,4 @@
-﻿namespace ServerHandling.Forms
+﻿namespace ServerHandling.Controls
 {
     partial class DeleteBookControl
     {
@@ -34,8 +34,6 @@
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label4;
             System.Windows.Forms.Label label3;
-            System.Windows.Forms.Panel panel2;
-            System.Windows.Forms.TextBox textBox1;
             this.deleteBookNameBox = new System.Windows.Forms.TextBox();
             this.deleteBookFindButton = new System.Windows.Forms.Button();
             this.deleteBookFoundBookView = new System.Windows.Forms.DataGridView();
@@ -51,11 +49,8 @@
             label2 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
-            panel2 = new System.Windows.Forms.Panel();
-            textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.deleteBookFoundBookView)).BeginInit();
             this.panel1.SuspendLayout();
-            panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // addBookNameButton
@@ -135,11 +130,12 @@
             // deleteBookFoundBookView
             // 
             this.deleteBookFoundBookView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.deleteBookFoundBookView.Location = new System.Drawing.Point(403, 63);
+            this.deleteBookFoundBookView.Dock = System.Windows.Forms.DockStyle.Right;
+            this.deleteBookFoundBookView.Location = new System.Drawing.Point(392, 0);
             this.deleteBookFoundBookView.Name = "deleteBookFoundBookView";
             this.deleteBookFoundBookView.RowHeadersWidth = 51;
             this.deleteBookFoundBookView.RowTemplate.Height = 24;
-            this.deleteBookFoundBookView.Size = new System.Drawing.Size(397, 578);
+            this.deleteBookFoundBookView.Size = new System.Drawing.Size(408, 500);
             this.deleteBookFoundBookView.TabIndex = 11;
             // 
             // deleteBookIdBox
@@ -184,7 +180,7 @@
             this.deleteBookConfirmButton.BackColor = System.Drawing.Color.Salmon;
             this.deleteBookConfirmButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.deleteBookConfirmButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteBookConfirmButton.Location = new System.Drawing.Point(221, 539);
+            this.deleteBookConfirmButton.Location = new System.Drawing.Point(221, 439);
             this.deleteBookConfirmButton.Name = "deleteBookConfirmButton";
             this.deleteBookConfirmButton.Size = new System.Drawing.Size(165, 45);
             this.deleteBookConfirmButton.TabIndex = 25;
@@ -204,51 +200,24 @@
             this.panel1.Controls.Add(this.deleteBookReleasedYearBox);
             this.panel1.Controls.Add(label2);
             this.panel1.Controls.Add(label4);
-            this.panel1.Location = new System.Drawing.Point(33, 84);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(353, 402);
+            this.panel1.Size = new System.Drawing.Size(353, 404);
             this.panel1.TabIndex = 26;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            panel2.Controls.Add(textBox1);
-            panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            panel2.Location = new System.Drawing.Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(800, 60);
-            panel2.TabIndex = 27;
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            textBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            textBox1.Enabled = false;
-            textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            textBox1.Location = new System.Drawing.Point(324, 21);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new System.Drawing.Size(126, 29);
-            textBox1.TabIndex = 0;
-            textBox1.Text = "Xóa Sách";
             // 
             // DeleteBookControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.deleteBookConfirmButton);
             this.Controls.Add(this.deleteBookFoundBookView);
             this.Name = "DeleteBookControl";
-            this.Size = new System.Drawing.Size(800, 600);
+            this.Size = new System.Drawing.Size(800, 500);
             ((System.ComponentModel.ISupportInitialize)(this.deleteBookFoundBookView)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }

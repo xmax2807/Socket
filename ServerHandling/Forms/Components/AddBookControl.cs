@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ServerHandling.Forms
+namespace ServerHandling.Controls
 {
     public partial class AddBookControl : UserControl
     {

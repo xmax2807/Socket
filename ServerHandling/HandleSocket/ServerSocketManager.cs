@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Collections.Generic;
 using CommonResource;
+using ServerHandling.Controls;
 
 namespace ServerHandling
 {
@@ -21,14 +22,17 @@ namespace ServerHandling
 
         private readonly byte[] buffer = new byte[bufferSize];
 
-        public event System.Action<string> OnConnected;
+        public event Action<string> OnPrintMessage;
 
-        public event Action<User> OnSignupUser;
+        public event Action<string> OnServerActivity;
 
         private readonly Database.DatabaseManager databaseManager;
 
-        public ServerSocketManager()
+        public ServerSocketManager(Database.DatabaseManager database)
         {
+            //Get instance of database
+            this.databaseManager = database;
+
             //Get ip of server
             serverEndPoint = LookupServerIP();
         }
@@ -50,14 +54,14 @@ namespace ServerHandling
         }
 
         //Return the server successfully set up or not
-        public bool SetupServer(out string message, out IPEndPoint endPoint)
+        public ServerState SetupServer()
         {
-            endPoint = this.serverEndPoint;
             //If aldready connected
             if (serverSock.Connected)
             {
-                message = "Server has been opened already";
-                return true;
+                OnPrintMessage?.Invoke("Server has been opened already");
+
+                return new ServerState(serverEndPoint, true);
             }
 
             try
@@ -72,18 +76,16 @@ namespace ServerHandling
                 //Calback to AcceptConnectingCallback after receving a connection
                 serverSock.BeginAccept(new AsyncCallback(AcceptConnectingCallback), null);
 
-                message = "Setup server successfully";
+                OnPrintMessage?.Invoke("Setup server successfully");
 
-                return true;
-            } //Catch an exception
-            catch (Exception)
+                return new ServerState(serverEndPoint, true);
+
+            } //Catch an socket exception
+            catch (SocketException)
             {
-                message = "Can't open the connection of server";
+                OnPrintMessage?.Invoke("Can't open the connection of server");
 
-                //return a null end point if can't connect
-                endPoint = null;
-
-                return false;
+                return new ServerState(null, false);
             }
         }
 
@@ -93,9 +95,9 @@ namespace ServerHandling
 
             clientSocks.Add(interSock);
 
-            interSock.BeginReceive(buffer, 0, bufferSize, SocketFlags.None, new AsyncCallback(ReceiveDataCallback), null);
+            interSock.BeginReceive(buffer, 0, bufferSize, SocketFlags.None, new AsyncCallback(ReceiveDataCallback), interSock);
 
-            OnConnected?.Invoke("Connected");
+            OnPrintMessage?.Invoke("Connected");
 
             //Continue accepting incoming connections
             serverSock.BeginAccept(new AsyncCallback(AcceptConnectingCallback), null);
@@ -104,7 +106,7 @@ namespace ServerHandling
 
         public void ReceiveDataCallback(IAsyncResult async)
         {
-            var interSock = async as Socket;
+            var interSock = async.AsyncState as Socket;
 
             var requestSize = interSock.EndReceive(async);
 
@@ -115,39 +117,81 @@ namespace ServerHandling
             HandleRequest(Encoding.ASCII.GetString(tempBufffer));
         }
 
+        public void SendDataToClient()
+        {
+
+        }
+
         public void HandleRequest(string request)
         {
-            var parts = request.Split('_');
-            var cmd = parts[0]; //Define the command
-            var json = parts[1];
-            switch ((TypeOfRequest)Enum.Parse(typeof(TypeOfRequest), cmd))
+            var result = UserServerRequest.HandleRequest(request);
+
+            if (result.IsValid)
             {
-                case TypeOfRequest.SIGN_UP:
-                    HandleSignup(json);
-                    break;
-                case TypeOfRequest.SIGN_IN:
-                    break;
-                default:
-                    break;
+                switch (result.type)
+                {
+                    case TypeOfRequest.SignUp:
+                        HandleSignUp(result.information as User);
+                        break;
+                    case TypeOfRequest.SignIn:
+                        HandleSignIn(result.information as User);
+                        break;
+                    default:
+                        HandleInvalidRequest();
+                        break;
+                }
+            }
+            else
+            {
+                HandleInvalidRequest();
             }
         }
 
-        public void HandleSignup(string json)
+        public void HandleInvalidRequest()
         {
-            User user = UserServerRequest.DeseralizeUser(json);
-            OnConnected?.Invoke(user.UserName);
+
         }
 
-        public void HandleSignin(string json)
+        //Handle sign up request
+        //Return the result back to client
+        public void HandleSignUp(User user)
         {
-            User user = UserServerRequest.DeseralizeUser(json);
-            OnConnected?.Invoke(user.UserName);
+            //Get result after inserting to sql
+            var result = databaseManager.InsertNewUser(user);
+
+            //Send message back to client depending on the result
+            if (result)
+            {
+                OnServerActivity?.Invoke(user.UserName + " đã đăng ký tài khoản thành công");
+            }
+            else
+            {
+                OnServerActivity?.Invoke(user.UserName + " đã đăng ký tài khoản thất bại");
+            }
+        }
+
+        public void HandleSignIn(User user)
+        {
+            var result = databaseManager.CheckLogin(user);
+
+            if (result)
+            {
+                OnServerActivity?.Invoke(user.UserName + " đã đăng nhập tài khoản thành công");
+            }
+            else
+            {
+                OnServerActivity?.Invoke(user.UserName + " đã đăng nhập tài khoản thất bại");
+            }
         }
 
         public void DisconnectServer()
         {
-            if (serverSock.Connected)
-                serverSock.Close();
+            //Sending message to all client that server is closing
+            serverSock.Shutdown(SocketShutdown.Both);
+            serverSock.Close();
+
+            //Show on UI
+            OnPrintMessage("Server has been closed");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ServerHandling.Forms
+﻿namespace ServerHandling.Controls
 {
     partial class AddBookControl
     {
@@ -33,11 +33,8 @@
             System.Windows.Forms.Label addBookReleasedYear;
             System.Windows.Forms.Label insertBookType;
             System.Windows.Forms.Label label1;
-            System.Windows.Forms.Panel panel2;
-            System.Windows.Forms.TextBox textBox1;
             this.insertBookNameBox = new System.Windows.Forms.TextBox();
             this.insertBookAuthorBox = new System.Windows.Forms.TextBox();
-            this.insertBookchosenBookIcon = new System.Windows.Forms.PictureBox();
             this.insertBookChooseFileButton = new System.Windows.Forms.Button();
             this.insertBookConfirmButton = new System.Windows.Forms.Button();
             this.insertBookTypeBox = new System.Windows.Forms.ComboBox();
@@ -51,10 +48,6 @@
             addBookReleasedYear = new System.Windows.Forms.Label();
             insertBookType = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
-            panel2 = new System.Windows.Forms.Panel();
-            textBox1 = new System.Windows.Forms.TextBox();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.insertBookchosenBookIcon)).BeginInit();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -115,28 +108,6 @@
             label1.TabIndex = 17;
             label1.Text = "Mô Tả Sách";
             // 
-            // panel2
-            // 
-            panel2.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            panel2.Controls.Add(textBox1);
-            panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            panel2.Location = new System.Drawing.Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(800, 60);
-            panel2.TabIndex = 19;
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            textBox1.Enabled = false;
-            textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            textBox1.Location = new System.Drawing.Point(297, 21);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new System.Drawing.Size(203, 36);
-            textBox1.TabIndex = 0;
-            textBox1.Text = "Thêm Sách Mới";
-            // 
             // insertBookNameBox
             // 
             this.insertBookNameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -154,21 +125,12 @@
             this.insertBookAuthorBox.Size = new System.Drawing.Size(370, 26);
             this.insertBookAuthorBox.TabIndex = 1;
             // 
-            // insertBookchosenBookIcon
-            // 
-            this.insertBookchosenBookIcon.Enabled = false;
-            this.insertBookchosenBookIcon.Location = new System.Drawing.Point(7, 298);
-            this.insertBookchosenBookIcon.Name = "insertBookchosenBookIcon";
-            this.insertBookchosenBookIcon.Size = new System.Drawing.Size(100, 107);
-            this.insertBookchosenBookIcon.TabIndex = 4;
-            this.insertBookchosenBookIcon.TabStop = false;
-            // 
             // insertBookChooseFileButton
             // 
             this.insertBookChooseFileButton.BackColor = System.Drawing.Color.WhiteSmoke;
             this.insertBookChooseFileButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.insertBookChooseFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.insertBookChooseFileButton.Location = new System.Drawing.Point(7, 252);
+            this.insertBookChooseFileButton.Location = new System.Drawing.Point(7, 268);
             this.insertBookChooseFileButton.Name = "insertBookChooseFileButton";
             this.insertBookChooseFileButton.Size = new System.Drawing.Size(100, 40);
             this.insertBookChooseFileButton.TabIndex = 5;
@@ -181,7 +143,7 @@
             this.insertBookConfirmButton.BackColor = System.Drawing.Color.WhiteSmoke;
             this.insertBookConfirmButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.insertBookConfirmButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.insertBookConfirmButton.Location = new System.Drawing.Point(347, 500);
+            this.insertBookConfirmButton.Location = new System.Drawing.Point(331, 405);
             this.insertBookConfirmButton.Name = "insertBookConfirmButton";
             this.insertBookConfirmButton.Size = new System.Drawing.Size(153, 73);
             this.insertBookConfirmButton.TabIndex = 6;
@@ -194,8 +156,36 @@
             this.insertBookTypeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.insertBookTypeBox.FormattingEnabled = true;
             this.insertBookTypeBox.Items.AddRange(new object[] {
+            "Ẩm thực - Nấu ăn",
+            "Cổ Tích - Thần Thoại",
             "Công Nghệ Thông Tin",
-            "Khoa Học - Kỹ Thuật"});
+            "Học Ngoại Ngữ",
+            "Hồi Ký - Tuỳ Bút",
+            "Huyền bí - Giả Tưởng",
+            "Khoa Học - Kỹ Thuật",
+            "Kiếm Hiệp - Tiên Hiệp",
+            "Kiến Trúc - Xây Dựng",
+            "Kinh Tế - Quản Lý",
+            "Lịch Sử - Chính Trị",
+            "Marketing - Bán hàng",
+            "Nông - Lâm - Ngư",
+            "Phiêu Lưu - Mạo Hiểm",
+            "Tài Liệu Học Tập",
+            "Thể Thao - Nghệ Thuật",
+            "Thư Viện Pháp Luật",
+            "Tiểu Thuyết Phương Tây",
+            "Tiểu Thuyết Trung Quốc",
+            "Triết Học",
+            "Trinh Thám - Hình Sự",
+            "Truyện Cười - Tiếu Lâm",
+            "Truyện Ma - Truyện Kinh Dị",
+            "Truyện Ngắn - Ngôn Tình",
+            "Truyên Teen - Tuổi Học Trò",
+            "Truyện Tranh",
+            "Tử Vi - Phong Thủy",
+            "Văn Hóa - Tôn Giáo",
+            "Văn Học Việt Nam",
+            "Y Học - Sức Khỏe"});
             this.insertBookTypeBox.Location = new System.Drawing.Point(7, 218);
             this.insertBookTypeBox.Name = "insertBookTypeBox";
             this.insertBookTypeBox.Size = new System.Drawing.Size(203, 28);
@@ -224,7 +214,7 @@
             this.insertBookDescribeBook.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.insertBookDescribeBook.Location = new System.Drawing.Point(3, 23);
             this.insertBookDescribeBook.Name = "insertBookDescribeBook";
-            this.insertBookDescribeBook.Size = new System.Drawing.Size(319, 382);
+            this.insertBookDescribeBook.Size = new System.Drawing.Size(341, 318);
             this.insertBookDescribeBook.TabIndex = 16;
             this.insertBookDescribeBook.Text = "A book about my life";
             // 
@@ -236,14 +226,13 @@
             this.panel1.Controls.Add(addBookNameButton);
             this.panel1.Controls.Add(this.insertBookReleasedYearBox);
             this.panel1.Controls.Add(addBookAuthorName);
-            this.panel1.Controls.Add(this.insertBookchosenBookIcon);
             this.panel1.Controls.Add(this.insertBookChooseFileButton);
             this.panel1.Controls.Add(addBookReleasedYear);
             this.panel1.Controls.Add(this.insertBookTypeBox);
             this.panel1.Controls.Add(insertBookType);
-            this.panel1.Location = new System.Drawing.Point(48, 86);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(380, 408);
+            this.panel1.Size = new System.Drawing.Size(384, 341);
             this.panel1.TabIndex = 18;
             // 
             // flowLayoutPanel1
@@ -251,9 +240,9 @@
             this.flowLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.flowLayoutPanel1.Controls.Add(label1);
             this.flowLayoutPanel1.Controls.Add(this.insertBookDescribeBook);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(443, 86);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(449, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(348, 408);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(348, 341);
             this.flowLayoutPanel1.TabIndex = 20;
             // 
             // AddBookControl
@@ -262,14 +251,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.insertBookConfirmButton);
             this.Name = "AddBookControl";
-            this.Size = new System.Drawing.Size(800, 600);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.insertBookchosenBookIcon)).EndInit();
+            this.Size = new System.Drawing.Size(800, 500);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -283,7 +268,6 @@
 
         private System.Windows.Forms.TextBox insertBookNameBox;
         private System.Windows.Forms.TextBox insertBookAuthorBox;
-        private System.Windows.Forms.PictureBox insertBookchosenBookIcon;
         private System.Windows.Forms.Button insertBookChooseFileButton;
         private System.Windows.Forms.Button insertBookConfirmButton;
         private System.Windows.Forms.ComboBox insertBookTypeBox;

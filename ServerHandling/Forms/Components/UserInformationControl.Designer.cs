@@ -1,4 +1,4 @@
-﻿namespace ServerHandling.Forms
+﻿namespace ServerHandling.Controls
 {
     partial class UserInformationControl
     {
@@ -33,8 +33,6 @@
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label addBookNameButton;
             System.Windows.Forms.Label labrl0;
-            System.Windows.Forms.Panel panel2;
-            System.Windows.Forms.TextBox textBox1;
             this.userNameBox = new System.Windows.Forms.TextBox();
             this.userFindButton = new System.Windows.Forms.Button();
             this.userIDBox = new System.Windows.Forms.TextBox();
@@ -50,17 +48,16 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             addBookNameButton = new System.Windows.Forms.Label();
             labrl0 = new System.Windows.Forms.Label();
-            panel2 = new System.Windows.Forms.Panel();
-            textBox1 = new System.Windows.Forms.TextBox();
-            panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -107,28 +104,6 @@
             labrl0.TabIndex = 32;
             labrl0.Text = "Tình Trạng";
             // 
-            // panel2
-            // 
-            panel2.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            panel2.Controls.Add(textBox1);
-            panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            panel2.Location = new System.Drawing.Point(0, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(800, 60);
-            panel2.TabIndex = 35;
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            textBox1.Enabled = false;
-            textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            textBox1.Location = new System.Drawing.Point(275, 21);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new System.Drawing.Size(279, 36);
-            textBox1.TabIndex = 0;
-            textBox1.Text = "Thông Tin Người Dùng";
-            // 
             // userNameBox
             // 
             this.userNameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -151,7 +126,7 @@
             // userIDBox
             // 
             this.userIDBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userIDBox.Location = new System.Drawing.Point(3, 33);
+            this.userIDBox.Location = new System.Drawing.Point(0, 33);
             this.userIDBox.Name = "userIDBox";
             this.userIDBox.Size = new System.Drawing.Size(288, 26);
             this.userIDBox.TabIndex = 22;
@@ -179,11 +154,11 @@
             // 
             // userDeleteUserButton
             // 
-            this.userDeleteUserButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.userDeleteUserButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.userDeleteUserButton.BackColor = System.Drawing.Color.Salmon;
             this.userDeleteUserButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.userDeleteUserButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userDeleteUserButton.Location = new System.Drawing.Point(666, 363);
+            this.userDeleteUserButton.Location = new System.Drawing.Point(115, 275);
             this.userDeleteUserButton.Name = "userDeleteUserButton";
             this.userDeleteUserButton.Size = new System.Drawing.Size(131, 30);
             this.userDeleteUserButton.TabIndex = 33;
@@ -192,11 +167,11 @@
             // 
             // userDisconnectButton
             // 
-            this.userDisconnectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.userDisconnectButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.userDisconnectButton.BackColor = System.Drawing.Color.Salmon;
             this.userDisconnectButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.userDisconnectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userDisconnectButton.Location = new System.Drawing.Point(526, 363);
+            this.userDisconnectButton.Location = new System.Drawing.Point(252, 275);
             this.userDisconnectButton.Name = "userDisconnectButton";
             this.userDisconnectButton.Size = new System.Drawing.Size(134, 30);
             this.userDisconnectButton.TabIndex = 34;
@@ -214,7 +189,7 @@
             this.panel1.Controls.Add(this.userIPBox);
             this.panel1.Controls.Add(addBookNameButton);
             this.panel1.Controls.Add(this.userStateBox);
-            this.panel1.Location = new System.Drawing.Point(21, 88);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(405, 305);
             this.panel1.TabIndex = 36;
@@ -234,22 +209,22 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 395);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 310);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(800, 246);
+            this.dataGridView1.Size = new System.Drawing.Size(800, 190);
             this.dataGridView1.TabIndex = 37;
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(463, 88);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(334, 269);
+            this.tabControl1.Size = new System.Drawing.Size(383, 269);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage2
@@ -258,7 +233,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(326, 240);
+            this.tabPage2.Size = new System.Drawing.Size(375, 240);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Sách đã tải";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -268,7 +243,7 @@
             this.richTextBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox2.Location = new System.Drawing.Point(3, 3);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(320, 234);
+            this.richTextBox2.Size = new System.Drawing.Size(369, 234);
             this.richTextBox2.TabIndex = 0;
             this.richTextBox2.Text = "";
             // 
@@ -282,27 +257,33 @@
             this.tabPage1.Text = "IP đã đăng nhập";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tabControl1);
+            this.panel2.Controls.Add(this.userDisconnectButton);
+            this.panel2.Controls.Add(this.userDeleteUserButton);
+            this.panel2.Location = new System.Drawing.Point(414, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(383, 305);
+            this.panel2.TabIndex = 39;
+            // 
             // UserInformationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.userDeleteUserButton);
-            this.Controls.Add(this.userDisconnectButton);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(panel2);
             this.Controls.Add(this.userFindButton);
             this.Name = "UserInformationControl";
-            this.Size = new System.Drawing.Size(800, 641);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            this.Size = new System.Drawing.Size(800, 500);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -324,5 +305,6 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Panel panel2;
     }
 }

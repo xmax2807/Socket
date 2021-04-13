@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ServerHandling.Forms
+namespace ServerHandling.Controls
 {
     public partial class UserInformationControl : UserControl
     {

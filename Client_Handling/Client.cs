@@ -75,10 +75,9 @@ namespace Client_Handling
         {
             try
             {
-                Socket handler = (Socket)asyn.AsyncState;
+                Socket handler = (Socket)asyn;
 
                 int byteSent = handler.EndSend(asyn);
-                handler.Shutdown(SocketShutdown.Both); handler.Close();
             }catch(Exception e) {  }
         }
         public void connect()
@@ -90,7 +89,7 @@ namespace Client_Handling
         {
             byte[] buffer = Encoding.ASCII.GetBytes(req);
 
-            client_socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(Send_callback), null);
+            client_socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(Send_callback), client_socket);
         }
         public void receive_data()
         {

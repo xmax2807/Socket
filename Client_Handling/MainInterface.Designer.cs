@@ -280,10 +280,13 @@
             // 
             // sign_in_up1
             // 
-            this.sign_in_up1.Location = new System.Drawing.Point(262, 237);
+            this.sign_in_up1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sign_in_up1.Visible = false;
+            this.sign_in_up1.Location = new System.Drawing.Point(0, 130);
             this.sign_in_up1.Name = "sign_in_up1";
-            this.sign_in_up1.Size = new System.Drawing.Size(481, 387);
+            this.sign_in_up1.Size = new System.Drawing.Size(892, 590);
             this.sign_in_up1.TabIndex = 1;
+            this.sign_in_up1.Close += new System.EventHandler(this.Back_Click);
             // 
             // Form1
             // 

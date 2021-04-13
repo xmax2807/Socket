@@ -13,11 +13,12 @@ namespace Client_Handling
     public partial class Form1 : Form
     {
         private Time_Client_Manager client = new Time_Client_Manager();
-        private Form active_form;
+        
 
         public Form1()
         {
             InitializeComponent();
+            
             SignUp();
             SignIn();
         }
@@ -133,19 +134,20 @@ namespace Client_Handling
 
         private void Login_MouseEnter(object sender, EventArgs e)
         {
-            this.Login.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Login.Font = new System.Drawing.Font("Maiandra GD", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
 
         }
         private void Login_MouseLeave(object sender, EventArgs e)
         {
-            this.Login.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Login.Font = new System.Drawing.Font("Maiandra GD", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         }
 
         private void Login_Click(object sender, EventArgs e)
         {
             HideAll(sender);
-
+            this.sign_in_up1.Visible = true;
+            
         }
 
         private void Got_info(object sender, EventArgs e)
@@ -159,11 +161,13 @@ namespace Client_Handling
         {
             this.categories.Show();
         }
-        private void Back_Click(object sender, EventArgs e)
+        public void Back_Click(object sender, EventArgs e)
         {
-            if (active_form != null)
-                active_form.Close();
-            Show_Back(sender);
+            if (this.sign_in_up1.Visible)
+            {
+                this.sign_in_up1.Visible = false;
+            }
+                Show_Back(sender);
         }
 
     

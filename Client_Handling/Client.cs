@@ -80,10 +80,12 @@ namespace Client_Handling
                 int byteSent = handler.EndSend(asyn);
             }catch(Exception e) {  }
         }
-        public void connect()
+        public void connect(string IP, string port)
         {
-            try { client_socket.Connect(IPAddress.Parse("10.124.6.205"), 11111); } 
-            catch (SocketException e) { OnShow?.Invoke(e.Message); }
+            try { client_socket.Connect(IPAddress.Parse(IP), int.Parse(port)); } 
+            catch (SocketException e) { 
+                OnShow?.Invoke(e.Message);
+            }
         }
         public void send_data(string req)
         {
@@ -100,14 +102,21 @@ namespace Client_Handling
 
         public void sign_up(string username, string pass)
         {
-            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SIGN_UP);
-            send_data(req);
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignUp);
+            try { send_data(req); }
+            catch (SocketException e) {
+                OnShow?.Invoke(e.Message);
+            };
         }
 
         public void sign_in(string username, string pass)
         {
-            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SIGN_IN);
-            send_data(req);
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignUp);
+            try { send_data(req); }
+            catch (SocketException e)
+            {
+                OnShow?.Invoke(e.Message);
+            };
         }
 
     }

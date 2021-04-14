@@ -31,28 +31,39 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.Exit = new System.Windows.Forms.Button();
-            this.waterMarkTextBox2 = new Client_Handling.WaterMarkTextBox();
-            this.waterMarkTextBox1 = new Client_Handling.WaterMarkTextBox();
+            this.MessageError = new System.Windows.Forms.Label();
+            this.password = new Client_Handling.WaterMarkTextBox();
+            this.username = new Client_Handling.WaterMarkTextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(86, 180);
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.FlatAppearance.BorderSize = 2;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Maiandra GD", 11F);
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(549, 314);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 27);
+            this.button1.Size = new System.Drawing.Size(92, 40);
             this.button1.TabIndex = 1;
             this.button1.Text = "Sign up";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(176, 180);
+            this.button2.BackColor = System.Drawing.Color.Transparent;
+            this.button2.FlatAppearance.BorderSize = 2;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Maiandra GD", 11F);
+            this.button2.ForeColor = System.Drawing.Color.Black;
+            this.button2.Location = new System.Drawing.Point(677, 314);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 27);
+            this.button2.Size = new System.Drawing.Size(92, 40);
             this.button2.TabIndex = 1;
             this.button2.Text = "Sign in";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Exit
@@ -72,37 +83,56 @@
             this.Exit.MouseEnter += new System.EventHandler(this.Exit_MouseEnter);
             this.Exit.MouseLeave += new System.EventHandler(this.Exit_MouseLeave);
             // 
-            // waterMarkTextBox2
+            // MessageError
             // 
-            this.waterMarkTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.waterMarkTextBox2.Location = new System.Drawing.Point(86, 152);
-            this.waterMarkTextBox2.Name = "waterMarkTextBox2";
-            this.waterMarkTextBox2.Size = new System.Drawing.Size(165, 22);
-            this.waterMarkTextBox2.TabIndex = 0;
-            this.waterMarkTextBox2.WaterMarkColor = System.Drawing.Color.Gray;
-            this.waterMarkTextBox2.WaterMarkText = "Water Mark";
+            this.MessageError.BackColor = System.Drawing.Color.Transparent;
+            this.MessageError.Font = new System.Drawing.Font("Maiandra GD", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MessageError.ForeColor = System.Drawing.Color.Red;
+            this.MessageError.Location = new System.Drawing.Point(271, 357);
+            this.MessageError.Name = "MessageError";
+            this.MessageError.Size = new System.Drawing.Size(783, 51);
+            this.MessageError.TabIndex = 3;
+            this.MessageError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.MessageError.Visible = false;
             // 
-            // waterMarkTextBox1
+            // password
             // 
-            this.waterMarkTextBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.waterMarkTextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.HistoryList;
-            this.waterMarkTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.waterMarkTextBox1.Location = new System.Drawing.Point(86, 124);
-            this.waterMarkTextBox1.Name = "waterMarkTextBox1";
-            this.waterMarkTextBox1.Size = new System.Drawing.Size(165, 22);
-            this.waterMarkTextBox1.TabIndex = 0;
-            this.waterMarkTextBox1.WaterMarkColor = System.Drawing.Color.Gray;
-            this.waterMarkTextBox1.WaterMarkText = "Water Mark";
+            this.password.BackColor = System.Drawing.Color.White;
+            this.password.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.password.Font = new System.Drawing.Font("Maiandra GD", 12F);
+            this.password.Location = new System.Drawing.Point(531, 278);
+            this.password.Name = "waterMarkTextBox2";
+            this.password.Size = new System.Drawing.Size(253, 24);
+            this.password.TabIndex = 0;
+            this.password.WaterMarkColor = System.Drawing.Color.Gray;
+            this.password.WaterMarkText = "Password";
+            this.password.GotFocus += new System.EventHandler(this.Auto_hideMessage);
+            // 
+            // username
+            // 
+            this.username.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.HistoryList;
+            this.username.BackColor = System.Drawing.Color.White;
+            this.username.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.username.Font = new System.Drawing.Font("Maiandra GD", 12F);
+            this.username.Location = new System.Drawing.Point(531, 242);
+            this.username.Name = "username";
+            this.username.Size = new System.Drawing.Size(253, 24);
+            this.username.TabIndex = 0;
+            this.username.WaterMarkColor = System.Drawing.Color.Gray;
+            this.username.WaterMarkText = "Username"; 
+            this.username.GotFocus += new System.EventHandler(this.Auto_hideMessage);
             // 
             // Sign_in_up
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.DimGray;
+            this.Controls.Add(this.MessageError);
             this.Controls.Add(this.Exit);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.waterMarkTextBox2);
-            this.Controls.Add(this.waterMarkTextBox1);
+            this.Controls.Add(this.password);
+            this.Controls.Add(this.username);
             this.Name = "Sign_in_up";
             this.Size = new System.Drawing.Size(1280, 720);
             this.ResumeLayout(false);
@@ -112,10 +142,11 @@
 
         #endregion
 
-        private WaterMarkTextBox waterMarkTextBox1;
-        private WaterMarkTextBox waterMarkTextBox2;
+        private WaterMarkTextBox username;
+        private WaterMarkTextBox password;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button Exit;
+        private System.Windows.Forms.Label MessageError;
     }
 }

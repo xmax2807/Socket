@@ -25,10 +25,10 @@ namespace ServerHandling.Controls
 
             var serverState = (ServerState)OnConnectButtonClick?.Invoke();
 
-            if (serverState.state)
+            if (serverState.State)
             {
-                serverIPBox.Text = serverState.endPoint.Address.ToString();
-                serverPortBox.Text = serverState.endPoint.Port.ToString();
+                serverIPBox.Text = serverState.EndPoint.Address.ToString();
+                serverPortBox.Text = serverState.EndPoint.Port.ToString();
                 serverStateBox.Text = "Connected";
                 
                 //Can click disconnect
@@ -61,13 +61,13 @@ namespace ServerHandling.Controls
 
     public struct ServerState
     {
-        public IPEndPoint endPoint { get; }
-        public bool state { get; }
+        public IPEndPoint EndPoint { get; }
+        public bool State { get; }
 
         public ServerState(IPEndPoint endPoint, bool state)
         {
-            this.endPoint = endPoint;
-            this.state = state;
+            this.EndPoint = endPoint;
+            this.State = state;
         }
     }
 }

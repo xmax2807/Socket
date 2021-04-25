@@ -22,7 +22,7 @@ namespace ServerHandling
         };
 
         //Return after deseralizing json string => a type object
-        private static object Deseralize(string json, Type type)
+        private static object DeseralizeRequest(string json, Type type)
         {
             try
             {
@@ -31,6 +31,18 @@ namespace ServerHandling
             catch (JsonException)
             {
                 return null;
+            }
+        }
+
+        public static string SeralizeMessage(object infor)
+        {
+            try
+            {
+                return JsonSerializer.Serialize(infor);
+            }
+            catch (JsonException)
+            {
+                return string.Empty;
             }
         }
 
@@ -46,12 +58,12 @@ namespace ServerHandling
             //Can't convert enum
             try
             {
-                var inforPart = parts[1]; //Json string
+                var inforPart = parts[1]; //Json string or information
 
                 var rq = TranslateRequest.GetRequestType(parts[0]);
 
                 if (RequestTypesToInforTypes.TryGetValue(rq, out var type))
-                    return new RequestInformation(rq, Deseralize(inforPart, type));
+                    return new RequestInformation(rq, DeseralizeRequest(inforPart, type));
 
                 //Not a json string
                 //Return itself
@@ -62,7 +74,6 @@ namespace ServerHandling
                 return new RequestInformation(TypeOfRequest.Error, null);
             }
         }
-
     }
 
     public struct RequestInformation

@@ -7,10 +7,7 @@ namespace ServerHandling
 {
     public partial class ServerInterface : Form
     {
-        private readonly Database.DatabaseManager databaseManager;
-
         private readonly HandleSocket.ServerSocketManager serverSocketManager;
-
 
         public ServerInterface()
         {
@@ -18,12 +15,7 @@ namespace ServerHandling
             InitializeComponent();
             SetupServerInformationComponent();
         }
-
-        public void PrintMessageFromComponent()
-        {
-
-        }
-
+      
         public void ExitProgram()
         {
             DisconnectServer();

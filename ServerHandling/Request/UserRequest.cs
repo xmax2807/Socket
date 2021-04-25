@@ -22,31 +22,36 @@ namespace CommonResource
     public class Book
     {
         public int ID { get; set; } = 0;
-        public string Name { get; set; } = null;
-        public string Author { get; set; } = null;
-        public string Type { get; set; } = null;
-        public int ReleasedYear { get; set; } = 0;
+        public string Name { get; }
+        public string Author { get; }
+        public string Type { get; }
+        public int Year { get; }
 
-        public Book()
+        public Book(int id, string name, string author, string type, int year)
         {
-
+            this.ID = id;
+            this.Name = name;
+            this.Author = author;
+            this.Type = type;
+            this.Year = year;   
         }
     }
 
     [Serializable]
     public class BookList
     {
-        public List<Book> Books { get; set; } = new List<Book>();
+        public List<Book> Books { get; }
 
-        public void AddBook(Book book)
+        public BookList(List<Book> books)
         {
-            this.Books.Add(book);
+            Books = books;
         }
     }
 
     public enum TypeOfRequest
     {
-        SignUp, SignIn, SearchBooksByID, SearchBooksByName, SearchBooksByAuthor, DownloadBook, Error
+        SignUp, SignIn, SearchBooksByID, SearchBooksByName, SearchBooksByAuthor, SearchBookByType,
+        ReadBook, DownloadBook, Error
     }
 
     public static class TranslateRequest
@@ -55,6 +60,5 @@ namespace CommonResource
         {
             return (TypeOfRequest)Enum.Parse(typeof(TypeOfRequest), request);
         }
-
     }
 }

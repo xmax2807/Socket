@@ -101,13 +101,13 @@ namespace Client_Handling
 
         public void sign_up(string username, string pass)
         {
-            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SIGN_UP);
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignUp);
             send_data(req);
         }
 
         public void sign_in(string username, string pass)
         {
-            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SIGN_IN);
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignIn);
             send_data(req);
         }
 

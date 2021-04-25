@@ -38,7 +38,7 @@ namespace ServerHandling
         //Return an struct containing information of request
         public static RequestInformation HandleRequest(string request)
         {
-            var parts = request.Split('_'); //Format request rq_json
+            var parts = request.Split('|'); //Format request rq|json
 
             //Catch ordinary exceptions
             //Can't get from dictionary
@@ -46,13 +46,16 @@ namespace ServerHandling
             //Can't convert enum
             try
             {
-                var json = parts[1]; //Json string
+                var inforPart = parts[1]; //Json string
 
-                var rq = (TypeOfRequest)Enum.Parse(typeof(TypeOfRequest), parts[0]);
+                var rq = TranslateRequest.GetRequestType(parts[0]);
 
-                var type = RequestTypesToInforTypes[rq];
+                if (RequestTypesToInforTypes.TryGetValue(rq, out var type))
+                    return new RequestInformation(rq, Deseralize(inforPart, type));
 
-                return new RequestInformation(rq, Deseralize(json, type));
+                //Not a json string
+                //Return itself
+                return new RequestInformation(rq, inforPart);
             }
             catch (Exception)
             {
@@ -64,16 +67,16 @@ namespace ServerHandling
 
     public struct RequestInformation
     {
-        public TypeOfRequest type { get; }
-        public object information { get; }
+        public TypeOfRequest Type { get; }
+        public object Information { get; }
 
         public RequestInformation(TypeOfRequest type, object information)
         {
-            this.type = type;
-            this.information = information;
+            this.Type = type;
+            this.Information = information;
         }
 
         //Indicate this is a valid request
-        public bool IsValid => type != TypeOfRequest.Error && information != null;
+        public bool IsValid => Type != TypeOfRequest.Error && Information != null;
     }
 }

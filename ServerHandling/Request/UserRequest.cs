@@ -31,7 +31,6 @@ namespace CommonResource
         {
 
         }
-
     }
 
     [Serializable]
@@ -47,7 +46,15 @@ namespace CommonResource
 
     public enum TypeOfRequest
     {
-        SignUp, SignIn, SearchBooksByID, SearchBooksByName, SearchBooksByAuthor, Error
+        SignUp, SignIn, SearchBooksByID, SearchBooksByName, SearchBooksByAuthor, DownloadBook, Error
     }
-    
+
+    public static class TranslateRequest
+    {
+        public static TypeOfRequest GetRequestType(string request)
+        {
+            return (TypeOfRequest)Enum.Parse(typeof(TypeOfRequest), request);
+        }
+
+    }
 }

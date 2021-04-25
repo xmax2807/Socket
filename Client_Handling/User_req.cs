@@ -15,7 +15,7 @@ namespace Client_Handling
         public static string Serialize(User user, TypeOfRequest req)
         {
             var json = JsonSerializer.Serialize(user);
-            return req.ToString() + '_' + json;
+            return req.ToString() + '|' + json;
         } 
     }
 }

@@ -13,21 +13,28 @@ namespace Client_Handling
     public partial class Form1 : Form
     {
         private Time_Client_Manager client = new Time_Client_Manager();
-        private Form active_form;
+        UserControl active;
 
         public Form1()
         {
             InitializeComponent();
+            active = connect_toHost1;
             SignUp();
             SignIn();
+            ConnectHost();
+        }
+        public void ConnectHost()
+        {
+            this.connect_toHost1.connect += (IP, port) => client.connect(IP, port);
+            client.OnShow += s => MessageBox.Show(s);
         }
         public void SignUp()
         {
-            sign_in_up1.OnSignup += (u) => client.sign_up(u.UserName, u.Password);
+            SignUpBox.OnSignup += (u) => client.sign_up(u.UserName, u.Password);
         }
         public void SignIn()
         {
-            sign_in_up1.SignIn += (u) => client.sign_in(u.UserName, u.Password);
+            SignUpBox.SignIn += (u) => client.sign_in(u.UserName, u.Password);
         }
         private void Search_box_focus(object sender, EventArgs e)
         {
@@ -70,8 +77,7 @@ namespace Client_Handling
         //search
         private void button1_Click(object sender, EventArgs e)
         {
-            client.connect();
-            client.OnShow += s => this.textBox1.Text = s;
+            
         }
         private void label2_TextChanged(object sender, EventArgs e)
         {
@@ -86,7 +92,10 @@ namespace Client_Handling
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
-            this.listBox1.Visible = true;
+            if(listBox1.Visible == false)
+                this.listBox1.Visible = true;
+            else
+                this.listBox1.Visible = false;
 
         }
 
@@ -99,42 +108,17 @@ namespace Client_Handling
             }
         }
 
-        //
 
-        //categories
-        private void categories_MouseEnter(object sender, EventArgs e)
-        {
-
-            this.categories.BackColor = System.Drawing.Color.FromArgb(80, System.Drawing.Color.White);
-        }
-
-        private void categories_MouseLeave(object sender, EventArgs e)
-        {
-            this.categories.BackColor = System.Drawing.Color.FromArgb(50, System.Drawing.Color.White);
-        }
-
-        private void buttonCategories_MouseEnter(object sender, EventArgs e)
-        {
-            this.categories.BackColor = System.Drawing.Color.FromArgb(80, System.Drawing.Color.White);
-        }
-
-        private void buttonCategories_MouseLeave(object sender, EventArgs e)
-        {
-            this.categories.BackColor = System.Drawing.Color.FromArgb(50, System.Drawing.Color.White);
-            this.button_categories.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-        }
-
-
-        // login
+     
         private void HideAll(object sender)
         {
-            this.categories.Hide();
+            if(active.Visible)
+                active.Visible = false;
         }
-
+        // login
         private void Login_MouseEnter(object sender, EventArgs e)
         {
             this.Login.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-
 
         }
         private void Login_MouseLeave(object sender, EventArgs e)
@@ -145,7 +129,30 @@ namespace Client_Handling
         private void Login_Click(object sender, EventArgs e)
         {
             HideAll(sender);
+            active = this.SignUpBox;
+            active.Visible = true;
+            
+        }
 
+        // Connect
+
+        private void Connect_MouseEnter(object sender, EventArgs e)
+        {
+            this.Connect.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+
+
+        }
+        private void Connect_MouseLeave(object sender, EventArgs e)
+        {
+            this.Connect.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        }
+
+        private void Connect_Click(object sender, EventArgs e)
+        {
+            HideAll(sender);
+            active = this.connect_toHost1;
+            active.Visible = true;
+            
         }
 
         private void Got_info(object sender, EventArgs e)
@@ -157,16 +164,15 @@ namespace Client_Handling
         //Back
         private void Show_Back(object sender)
         {
-            this.categories.Show();
         }
-        private void Back_Click(object sender, EventArgs e)
+        public void Back_Click(object sender, EventArgs e)
         {
-            if (active_form != null)
-                active_form.Close();
+            if (this.SignUpBox.Visible)
+            {
+                this.SignUpBox.Visible = false;
+            }
             Show_Back(sender);
         }
-
-    
-        //
+        
     }
 }

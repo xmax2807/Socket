@@ -41,23 +41,20 @@
             this.button1 = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.categories = new System.Windows.Forms.Panel();
-            this.categories_pic = new System.Windows.Forms.PictureBox();
-            this.button_categories = new System.Windows.Forms.Button();
-            this.Discription_categories = new System.Windows.Forms.Label();
-            this.sign_in_up1 = new Client_Handling.Forms.Sign_in_up();
+            this.SignUpBox = new Client_Handling.Forms.Sign_in_up();
+            this.connect_toHost1 = new Client_Handling.Forms.Connect_toHost();
+            this.Connect = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).BeginInit();
-            this.categories.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.categories_pic)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.panel1.Controls.Add(this.Connect);
             this.panel1.Controls.Add(this.Login);
             this.panel1.Controls.Add(this.listBox1);
             this.panel1.Controls.Add(this.panel2);
@@ -93,6 +90,7 @@
             // 
             this.listBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.listBox1.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.IntegralHeight = false;
@@ -101,7 +99,8 @@
             "ID",
             "Title",
             "Author",
-            "Genre"});
+            "Genre",
+            "Year"});
             this.listBox1.Location = new System.Drawing.Point(938, 72);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
@@ -215,75 +214,44 @@
             this.label1.Text = "Online Library";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // categories
+            // SignUpBox
             // 
-            this.categories.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.categories.BackgroundImage = global::Client_Handling.Properties.Resources.genre_cloud;
-            this.categories.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.categories.Controls.Add(this.categories_pic);
-            this.categories.Controls.Add(this.button_categories);
-            this.categories.Controls.Add(this.Discription_categories);
-            this.categories.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.categories.Dock = System.Windows.Forms.DockStyle.Right;
-            this.categories.Location = new System.Drawing.Point(892, 130);
-            this.categories.Name = "categories";
-            this.categories.Size = new System.Drawing.Size(388, 590);
-            this.categories.TabIndex = 1;
-            this.categories.MouseEnter += new System.EventHandler(this.categories_MouseEnter);
-            this.categories.MouseLeave += new System.EventHandler(this.categories_MouseLeave);
+            this.SignUpBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.SignUpBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SignUpBox.Location = new System.Drawing.Point(0, 130);
+            this.SignUpBox.Name = "SignUpBox";
+            this.SignUpBox.Size = new System.Drawing.Size(1280, 590);
+            this.SignUpBox.TabIndex = 1;
+            this.SignUpBox.Visible = false;
+            this.SignUpBox.Close += new System.EventHandler(this.Back_Click);
             // 
-            // categories_pic
+            // connect_toHost1
             // 
-            this.categories_pic.BackColor = System.Drawing.Color.Transparent;
-            this.categories_pic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.categories_pic.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.categories_pic.Image = global::Client_Handling.Properties.Resources.icon_category_5;
-            this.categories_pic.Location = new System.Drawing.Point(0, 202);
-            this.categories_pic.Name = "categories_pic";
-            this.categories_pic.Size = new System.Drawing.Size(388, 132);
-            this.categories_pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.categories_pic.TabIndex = 4;
-            this.categories_pic.TabStop = false;
-            this.categories_pic.MouseEnter += new System.EventHandler(this.categories_MouseEnter);
-            this.categories_pic.MouseLeave += new System.EventHandler(this.categories_MouseLeave);
+            this.connect_toHost1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.connect_toHost1.Location = new System.Drawing.Point(0, 130);
+            this.connect_toHost1.Name = "connect_toHost1";
+            this.connect_toHost1.Size = new System.Drawing.Size(1280, 590);
+            this.connect_toHost1.TabIndex = 2;
             // 
-            // button_categories
+            // Connect button
             // 
-            this.button_categories.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button_categories.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(191)))), ((int)(((byte)(255)))));
-            this.button_categories.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_categories.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.button_categories.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_categories.Font = new System.Drawing.Font("Maiandra GD", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_categories.Location = new System.Drawing.Point(0, 334);
-            this.button_categories.Name = "button_categories";
-            this.button_categories.Size = new System.Drawing.Size(388, 96);
-            this.button_categories.TabIndex = 3;
-            this.button_categories.Text = "Categories";
-            this.button_categories.UseVisualStyleBackColor = true;
-            this.button_categories.MouseEnter += new System.EventHandler(this.categories_MouseEnter);
-            this.button_categories.MouseLeave += new System.EventHandler(this.categories_MouseLeave);
-            // 
-            // Discription_categories
-            // 
-            this.Discription_categories.BackColor = System.Drawing.Color.Transparent;
-            this.Discription_categories.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Discription_categories.Font = new System.Drawing.Font("Maiandra GD", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Discription_categories.Location = new System.Drawing.Point(0, 430);
-            this.Discription_categories.Name = "Discription_categories";
-            this.Discription_categories.Size = new System.Drawing.Size(388, 160);
-            this.Discription_categories.TabIndex = 2;
-            this.Discription_categories.Text = "Find your favorite type of book";
-            this.Discription_categories.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Discription_categories.MouseEnter += new System.EventHandler(this.categories_MouseEnter);
-            this.Discription_categories.MouseLeave += new System.EventHandler(this.categories_MouseLeave);
-            // 
-            // sign_in_up1
-            // 
-            this.sign_in_up1.Location = new System.Drawing.Point(262, 237);
-            this.sign_in_up1.Name = "sign_in_up1";
-            this.sign_in_up1.Size = new System.Drawing.Size(481, 387);
-            this.sign_in_up1.TabIndex = 1;
+            this.Connect.AutoSize = true;
+            this.Connect.BackColor = System.Drawing.Color.Transparent;
+            this.Connect.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Connect.FlatAppearance.BorderSize = 0;
+            this.Connect.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.Connect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.Connect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Connect.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Connect.Location = new System.Drawing.Point(474, 42);
+            this.Connect.Name = "button2";
+            this.Connect.Size = new System.Drawing.Size(81, 31);
+            this.Connect.TabIndex = 3;
+            this.Connect.Text = "Connect";
+            this.Connect.UseVisualStyleBackColor = false;
+            this.Connect.Click += new System.EventHandler(this.Connect_Click);
+            this.Connect.MouseEnter += new System.EventHandler(this.Connect_MouseEnter);
+            this.Connect.MouseLeave += new System.EventHandler(this.Connect_MouseLeave);
             // 
             // Form1
             // 
@@ -292,8 +260,8 @@
             this.BackgroundImage = global::Client_Handling.Properties.Resources.wallpaperflare_com_wallpaper;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1280, 720);
-            this.Controls.Add(this.sign_in_up1);
-            this.Controls.Add(this.categories);
+            this.Controls.Add(this.connect_toHost1);
+            this.Controls.Add(this.SignUpBox);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
@@ -306,8 +274,6 @@
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).EndInit();
-            this.categories.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.categories_pic)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -324,12 +290,10 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Panel categories;
-        private System.Windows.Forms.Button button_categories;
-        private System.Windows.Forms.Label Discription_categories;
-        private System.Windows.Forms.PictureBox categories_pic;
         private System.Windows.Forms.Button Login;
-        private Forms.Sign_in_up sign_in_up1;
+        private Forms.Sign_in_up SignUpBox;
+        private System.Windows.Forms.Button Connect;
+        private Forms.Connect_toHost connect_toHost1;
     }
 }
 

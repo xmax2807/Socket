@@ -75,22 +75,23 @@ namespace Client_Handling
         {
             try
             {
-                Socket handler = (Socket)asyn.AsyncState;
+                Socket handler = (Socket)asyn;
 
                 int byteSent = handler.EndSend(asyn);
-                handler.Shutdown(SocketShutdown.Both); handler.Close();
             }catch(Exception e) {  }
         }
-        public void connect()
+        public void connect(string IP, string port)
         {
-            try { client_socket.Connect(IPAddress.Parse("10.124.6.205"), 11111); } 
-            catch (SocketException e) { OnShow?.Invoke(e.Message); }
+            try { client_socket.Connect(IPAddress.Parse(IP), int.Parse(port)); } 
+            catch (SocketException e) { 
+                OnShow?.Invoke(e.Message);
+            }
         }
         public void send_data(string req)
         {
             byte[] buffer = Encoding.ASCII.GetBytes(req);
 
-            client_socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(Send_callback), null);
+            client_socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(Send_callback), client_socket);
         }
         public void receive_data()
         {
@@ -102,13 +103,20 @@ namespace Client_Handling
         public void sign_up(string username, string pass)
         {
             var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignUp);
-            send_data(req);
+            try { send_data(req); }
+            catch (SocketException e) {
+                OnShow?.Invoke(e.Message);
+            };
         }
 
         public void sign_in(string username, string pass)
         {
-            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignIn);
-            send_data(req);
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignUp);
+            try { send_data(req); }
+            catch (SocketException e)
+            {
+                OnShow?.Invoke(e.Message);
+            };
         }
 
     }

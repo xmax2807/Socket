@@ -75,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Forms\Connect_toHost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Connect_toHost.Designer.cs">
+      <DependentUpon>Connect_toHost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Sign_in_up.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,7 +96,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User_req.cs" />
-    <Compile Include="Watermark.cs" />
+    <Compile Include="Watermark.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Forms\Connect_toHost.resx">
+      <DependentUpon>Connect_toHost.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sign_in_up.resx">
       <DependentUpon>Sign_in_up.cs</DependentUpon>
     </EmbeddedResource>

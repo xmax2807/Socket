@@ -13,7 +13,8 @@ namespace Client_Handling.Forms
 {
     public partial class Connect_toHost : UserControl
     {
-        public event Action<string,string> connect;
+        public event Action<string> connect;
+        public event EventHandler Close;
         public Connect_toHost()
         {
             InitializeComponent();
@@ -32,22 +33,33 @@ namespace Client_Handling.Forms
             }
             return true;
         }
-        private bool check_input_PortOnly(string input)
-        {
-            return int.TryParse(input, out _);
-        }
 
         public void Connect_enter(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter)
             {
-                if (check_input_IPOnly(this.IP.Text) && check_input_PortOnly(this.port.Text))
-                    connect?.Invoke(this.IP.Text, this.port.Text);
+                if (check_input_IPOnly(this.IP.Text))
+                    connect?.Invoke(this.IP.Text);
                 else
                 {
-                    this.label1.Text = "IP and port must contain number only. Please check again the IP address or port";
+                    this.label1.Text = "IP must contain number only. Please check again the IP address";
                 }
             }
+        }
+
+        private void Exit_MouseEnter(object sender, EventArgs e)
+        {
+            this.Exit.BackgroundImage = global::Client_Handling.Properties.Resources.exit_color;
+        }
+
+        private void Exit_MouseLeave(object sender, EventArgs e)
+        {
+            this.Exit.BackgroundImage = global::Client_Handling.Properties.Resources.exit_nocolor;
+        }
+
+        private void Exit_click(object sender, EventArgs e)
+        {
+            Close?.Invoke(sender, e);
         }
     }
 }

@@ -38,7 +38,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.search_button = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SignUpBox = new Client_Handling.Forms.Sign_in_up();
@@ -116,7 +116,7 @@
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.textBox1);
-            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.search_button);
             this.panel2.Location = new System.Drawing.Point(626, 32);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(500, 49);
@@ -173,20 +173,19 @@
             // 
             // button1
             // 
-            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button1.BackgroundImage = global::Client_Handling.Properties.Resources.search_icon_rounded_squares_button_vector_4527540;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(450, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 49);
-            this.button1.TabIndex = 0;
-            this.button1.TabStop = false;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.search_button.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.search_button.BackgroundImage = global::Client_Handling.Properties.Resources.search_icon_rounded_squares_button_vector_4527540;
+            this.search_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.search_button.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.search_button.Dock = System.Windows.Forms.DockStyle.Right;
+            this.search_button.FlatAppearance.BorderSize = 0;
+            this.search_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.search_button.Location = new System.Drawing.Point(450, 0);
+            this.search_button.Size = new System.Drawing.Size(50, 49);
+            this.search_button.TabIndex = 0;
+            this.search_button.TabStop = false;
+            this.search_button.UseVisualStyleBackColor = true;
+            this.search_button.Click += new System.EventHandler(this.search_Click);
             // 
             // exit
             // 
@@ -232,6 +231,8 @@
             this.connect_toHost1.Name = "connect_toHost1";
             this.connect_toHost1.Size = new System.Drawing.Size(1280, 590);
             this.connect_toHost1.TabIndex = 2;
+            this.connect_toHost1.Visible = true;
+            this.connect_toHost1.Close += new System.EventHandler(this.Back_Click_Connect);
             // 
             // Connect button
             // 
@@ -284,7 +285,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox exit;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button search_button;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Panel panel3;

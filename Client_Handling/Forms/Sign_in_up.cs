@@ -16,7 +16,8 @@ namespace Client_Handling.Forms
         public event Action<User> OnSignup;
         public event Action<User> SignIn;
         public event EventHandler Close;
-        
+        const int MaxAnsiCode = 255;
+
         public Sign_in_up()
         {
             InitializeComponent();
@@ -39,10 +40,8 @@ namespace Client_Handling.Forms
             return true;
         }
         private bool check_character(string input)
-        {
-            MaskedTextBox mask = new MaskedTextBox();
-            mask.Text = input;
-            return mask.AsciiOnly;
+        { 
+            return input.All(c => c <= MaxAnsiCode);
         }
 
         private void button1_Click(object sender, EventArgs e)

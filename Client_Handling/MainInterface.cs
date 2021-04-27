@@ -14,6 +14,7 @@ namespace Client_Handling
     {
         private Time_Client_Manager client = new Time_Client_Manager();
         UserControl active;
+        string get_function;
 
         public Form1()
         {
@@ -25,7 +26,7 @@ namespace Client_Handling
         }
         public void ConnectHost()
         {
-            this.connect_toHost1.connect += (IP, port) => client.connect(IP, port);
+            this.connect_toHost1.connect += (IP) => client.connect(IP);
             client.OnShow += s => MessageBox.Show(s);
         }
         public void SignUp()
@@ -36,6 +37,43 @@ namespace Client_Handling
         {
             SignUpBox.SignIn += (u) => client.sign_in(u.UserName, u.Password);
         }
+
+        public void Switch_Function()
+        {
+            string typereq = "";
+
+            switch (get_function)
+            {
+                case "ID":
+                    {
+                        typereq = CommonResource.TypeOfRequest.SearchBooksByID.ToString();
+                        break;
+                    }
+                case "Title":
+                    {
+                        typereq = CommonResource.TypeOfRequest.SearchBooksByName.ToString();
+                        break;
+                    }
+                case "Author":
+                    {
+                        typereq = CommonResource.TypeOfRequest.SearchBooksByAuthor.ToString();
+                        break;
+                    }
+                case "Genre":
+                    {
+                        typereq = CommonResource.TypeOfRequest.SearchBookByType.ToString();
+                        break;
+                    }
+                case "Year":
+                    {
+                        typereq = CommonResource.TypeOfRequest.SearchBooksByAuthor.ToString();// Year;
+                        break;
+                    }
+            }
+            client.Search_Book(typereq);
+        }
+
+        //Interface + Interaction
         private void Search_box_focus(object sender, EventArgs e)
         {
             if (this.textBox1.Text.Equals("Type here to search"))
@@ -74,11 +112,27 @@ namespace Client_Handling
             exit.BackgroundImage = global::Client_Handling.Properties.Resources.exit_nocolor;
         }
         //
-        //search
-        private void button1_Click(object sender, EventArgs e)
+        //search-----------------------------------
+        private void search_Click(object sender, EventArgs e)
         {
-            
+            if (!client.SocketConnected())
+            {
+                MessageBox.Show("Can't connect to server");
+                return;
+            }
+            Switch_Function();
         }
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Search
+                search_button.Click += new System.EventHandler(search_Click);
+            }
+        }
+        //
+
+        // some fx in text box
         private void label2_TextChanged(object sender, EventArgs e)
         {
             this.label2.Text = this.listBox1.SelectedItem.ToString();
@@ -87,8 +141,10 @@ namespace Client_Handling
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.label2.Text = this.listBox1.SelectedItem.ToString();
+            get_function = this.label2.Text;
             this.listBox1.Visible = false;
         }
+        //
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
@@ -99,17 +155,6 @@ namespace Client_Handling
 
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                // Search
-                button1.Click += new System.EventHandler(button1_Click);
-            }
-        }
-
-
-     
         private void HideAll(object sender)
         {
             if(active.Visible)
@@ -128,6 +173,11 @@ namespace Client_Handling
 
         private void Login_Click(object sender, EventArgs e)
         {
+            if (!client.SocketConnected())
+            {
+                MessageBox.Show("Please connect the server first");
+                return;
+            }
             HideAll(sender);
             active = this.SignUpBox;
             active.Visible = true;
@@ -170,6 +220,15 @@ namespace Client_Handling
             if (this.SignUpBox.Visible)
             {
                 this.SignUpBox.Visible = false;
+            }
+            Show_Back(sender);
+        }
+
+        public void Back_Click_Connect(object sender, EventArgs e)
+        {
+            if (this.connect_toHost1.Visible)
+            {
+                this.connect_toHost1.Visible = false;
             }
             Show_Back(sender);
         }

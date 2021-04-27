@@ -16,6 +16,11 @@ namespace Client_Handling
         {
             var json = JsonSerializer.Serialize(user);
             return req.ToString() + '|' + json;
-        } 
+        }
+
+        public static List<Book> Deserialize_list(string input)
+        {
+            return JsonSerializer.Deserialize<List<Book>>(input);
+        }
     }
 }

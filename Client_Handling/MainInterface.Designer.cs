@@ -31,19 +31,20 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Connect = new System.Windows.Forms.Button();
             this.Login = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SearchBar = new System.Windows.Forms.TextBox();
             this.search_button = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.SignUpBox = new Client_Handling.Forms.Sign_in_up();
             this.connect_toHost1 = new Client_Handling.Forms.Connect_toHost();
-            this.Connect = new System.Windows.Forms.Button();
+            this.SignUpBox = new Client_Handling.Forms.Sign_in_up();
+            this.listBook_Interface1 = new Client_Handling.Forms.ListBook_Interface();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -65,6 +66,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1280, 130);
             this.panel1.TabIndex = 0;
+            // 
+            // Connect
+            // 
+            this.Connect.AutoSize = true;
+            this.Connect.BackColor = System.Drawing.Color.Transparent;
+            this.Connect.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Connect.FlatAppearance.BorderSize = 0;
+            this.Connect.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.Connect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.Connect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Connect.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Connect.Location = new System.Drawing.Point(474, 42);
+            this.Connect.Name = "Connect";
+            this.Connect.Size = new System.Drawing.Size(81, 31);
+            this.Connect.TabIndex = 3;
+            this.Connect.Text = "Connect";
+            this.Connect.UseVisualStyleBackColor = false;
+            this.Connect.Click += new System.EventHandler(this.Connect_Click);
+            this.Connect.MouseEnter += new System.EventHandler(this.Connect_MouseEnter);
+            this.Connect.MouseLeave += new System.EventHandler(this.Connect_MouseLeave);
             // 
             // Login
             // 
@@ -115,7 +136,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Controls.Add(this.panel3);
-            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.SearchBar);
             this.panel2.Controls.Add(this.search_button);
             this.panel2.Location = new System.Drawing.Point(626, 32);
             this.panel2.Name = "panel2";
@@ -156,22 +177,22 @@
             this.label2.Text = "Title";
             this.label2.TextChanged += new System.EventHandler(this.label2_TextChanged);
             // 
-            // textBox1
+            // SearchBar
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Font = new System.Drawing.Font("Maiandra GD", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.LightGray;
-            this.textBox1.Location = new System.Drawing.Point(3, 10);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(312, 31);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "Type here to search";
-            this.textBox1.GotFocus += new System.EventHandler(this.Search_box_focus);
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
-            this.textBox1.LostFocus += new System.EventHandler(this.Search_box_defocus);
+            this.SearchBar.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.SearchBar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SearchBar.Font = new System.Drawing.Font("Maiandra GD", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SearchBar.ForeColor = System.Drawing.Color.LightGray;
+            this.SearchBar.Location = new System.Drawing.Point(3, 10);
+            this.SearchBar.Name = "SearchBar";
+            this.SearchBar.Size = new System.Drawing.Size(312, 31);
+            this.SearchBar.TabIndex = 1;
+            this.SearchBar.Text = "Type here to search";
+            this.SearchBar.GotFocus += new System.EventHandler(this.Search_box_focus);
+            this.SearchBar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.SearchBar.LostFocus += new System.EventHandler(this.Search_box_defocus);
             // 
-            // button1
+            // search_button
             // 
             this.search_button.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.search_button.BackgroundImage = global::Client_Handling.Properties.Resources.search_icon_rounded_squares_button_vector_4527540;
@@ -181,6 +202,7 @@
             this.search_button.FlatAppearance.BorderSize = 0;
             this.search_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.search_button.Location = new System.Drawing.Point(450, 0);
+            this.search_button.Name = "search_button";
             this.search_button.Size = new System.Drawing.Size(50, 49);
             this.search_button.TabIndex = 0;
             this.search_button.TabStop = false;
@@ -213,6 +235,16 @@
             this.label1.Text = "Online Library";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // connect_toHost1
+            // 
+            this.connect_toHost1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.connect_toHost1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.connect_toHost1.Location = new System.Drawing.Point(0, 130);
+            this.connect_toHost1.Name = "connect_toHost1";
+            this.connect_toHost1.Size = new System.Drawing.Size(1280, 590);
+            this.connect_toHost1.TabIndex = 2;
+            this.connect_toHost1.Close += new System.EventHandler(this.Back_Click);
+            // 
             // SignUpBox
             // 
             this.SignUpBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
@@ -224,35 +256,15 @@
             this.SignUpBox.Visible = false;
             this.SignUpBox.Close += new System.EventHandler(this.Back_Click);
             // 
-            // connect_toHost1
+            // listBook_Interface1
             // 
-            this.connect_toHost1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.connect_toHost1.Location = new System.Drawing.Point(0, 130);
-            this.connect_toHost1.Name = "connect_toHost1";
-            this.connect_toHost1.Size = new System.Drawing.Size(1280, 590);
-            this.connect_toHost1.TabIndex = 2;
-            this.connect_toHost1.Visible = true;
-            this.connect_toHost1.Close += new System.EventHandler(this.Back_Click_Connect);
-            // 
-            // Connect button
-            // 
-            this.Connect.AutoSize = true;
-            this.Connect.BackColor = System.Drawing.Color.Transparent;
-            this.Connect.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Connect.FlatAppearance.BorderSize = 0;
-            this.Connect.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.Connect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.Connect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Connect.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Connect.Location = new System.Drawing.Point(474, 42);
-            this.Connect.Name = "button2";
-            this.Connect.Size = new System.Drawing.Size(81, 31);
-            this.Connect.TabIndex = 3;
-            this.Connect.Text = "Connect";
-            this.Connect.UseVisualStyleBackColor = false;
-            this.Connect.Click += new System.EventHandler(this.Connect_Click);
-            this.Connect.MouseEnter += new System.EventHandler(this.Connect_MouseEnter);
-            this.Connect.MouseLeave += new System.EventHandler(this.Connect_MouseLeave);
+            this.listBook_Interface1.BackColor = System.Drawing.Color.Transparent;
+            this.listBook_Interface1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBook_Interface1.Location = new System.Drawing.Point(0, 130);
+            this.listBook_Interface1.Name = "listBook_Interface1";
+            this.listBook_Interface1.Size = new System.Drawing.Size(1280, 590);
+            this.listBook_Interface1.TabIndex = 3;
+            this.listBook_Interface1.Close += new System.EventHandler(this.Back_Click);
             // 
             // Form1
             // 
@@ -261,6 +273,7 @@
             this.BackgroundImage = global::Client_Handling.Properties.Resources.wallpaperflare_com_wallpaper;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1280, 720);
+            this.Controls.Add(this.listBook_Interface1);
             this.Controls.Add(this.connect_toHost1);
             this.Controls.Add(this.SignUpBox);
             this.Controls.Add(this.panel1);
@@ -286,7 +299,7 @@
         private System.Windows.Forms.PictureBox exit;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button search_button;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox SearchBar;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label2;
@@ -295,6 +308,7 @@
         private Forms.Sign_in_up SignUpBox;
         private System.Windows.Forms.Button Connect;
         private Forms.Connect_toHost connect_toHost1;
+        private Forms.ListBook_Interface listBook_Interface1;
     }
 }
 

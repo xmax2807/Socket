@@ -15,11 +15,11 @@ namespace Client_Handling
         private Time_Client_Manager client = new Time_Client_Manager();
         UserControl active;
         string get_function;
-
         public Form1()
         {
             InitializeComponent();
             active = connect_toHost1;
+            
             SignUp();
             SignIn();
             ConnectHost();
@@ -32,10 +32,12 @@ namespace Client_Handling
         public void SignUp()
         {
             SignUpBox.OnSignup += (u) => client.sign_up(u.UserName, u.Password);
+            client.OnShow += s => MessageBox.Show(s);
         }
         public void SignIn()
         {
             SignUpBox.SignIn += (u) => client.sign_in(u.UserName, u.Password);
+            client.OnShow += s => MessageBox.Show(s);
         }
 
         public void Switch_Function()
@@ -70,25 +72,35 @@ namespace Client_Handling
                         break;
                     }
             }
-            client.Search_Book(typereq);
+            client.Search_Book(typereq + "|" +this.SearchBar.Text);
+        }
+
+        private void Display_listBook()
+        {
+            int size_list = client.bookList.Books.Count;
+            
+            for(int i = 0; i < size_list; i++)
+            {
+                this.listBook_Interface1.AddBook(client.bookList.Books[i]);
+            }
         }
 
         //Interface + Interaction
         private void Search_box_focus(object sender, EventArgs e)
         {
-            if (this.textBox1.Text.Equals("Type here to search"))
+            if (this.SearchBar.Text.Equals("Type here to search"))
             {
-                this.textBox1.Text = "";
+                this.SearchBar.Text = "";
             }
-            this.textBox1.ForeColor = Color.Black;
+            this.SearchBar.ForeColor = Color.Black;
         }
 
         private void Search_box_defocus(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(this.textBox1.Text))
+            if (string.IsNullOrEmpty(this.SearchBar.Text))
             {
-                this.textBox1.Text = "Type here to search";
-                this.textBox1.ForeColor = Color.Gray;
+                this.SearchBar.Text = "Type here to search";
+                this.SearchBar.ForeColor = Color.Gray;
             }
 
         }
@@ -120,7 +132,11 @@ namespace Client_Handling
                 MessageBox.Show("Can't connect to server");
                 return;
             }
+            HideAll();
             Switch_Function();
+            active = this.listBook_Interface1;
+            active.Visible = true;
+            Display_listBook();
         }
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -155,10 +171,9 @@ namespace Client_Handling
 
         }
 
-        private void HideAll(object sender)
+        private void HideAll()
         {
-            if(active.Visible)
-                active.Visible = false;
+            active.Visible = false;
         }
         // login
         private void Login_MouseEnter(object sender, EventArgs e)
@@ -178,19 +193,16 @@ namespace Client_Handling
                 MessageBox.Show("Please connect the server first");
                 return;
             }
-            HideAll(sender);
+            HideAll();
             active = this.SignUpBox;
             active.Visible = true;
             
         }
-
+        //
         // Connect
-
         private void Connect_MouseEnter(object sender, EventArgs e)
         {
             this.Connect.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-
-
         }
         private void Connect_MouseLeave(object sender, EventArgs e)
         {
@@ -199,15 +211,10 @@ namespace Client_Handling
 
         private void Connect_Click(object sender, EventArgs e)
         {
-            HideAll(sender);
+            HideAll();
             active = this.connect_toHost1;
             active.Visible = true;
             
-        }
-
-        private void Got_info(object sender, EventArgs e)
-        {
-
         }
         //
 
@@ -217,21 +224,14 @@ namespace Client_Handling
         }
         public void Back_Click(object sender, EventArgs e)
         {
-            if (this.SignUpBox.Visible)
+            if (active.Visible)
             {
-                this.SignUpBox.Visible = false;
+                this.active.Visible = false;
             }
             Show_Back(sender);
         }
 
-        public void Back_Click_Connect(object sender, EventArgs e)
-        {
-            if (this.connect_toHost1.Visible)
-            {
-                this.connect_toHost1.Visible = false;
-            }
-            Show_Back(sender);
-        }
+       
         
     }
 }

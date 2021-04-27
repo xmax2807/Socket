@@ -14,6 +14,7 @@ namespace Client_Handling
         private Socket client_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         private byte[] buffer = new byte[4096];
         private List<byte> buffers = new List<byte>();
+        public CommonResource.BookList bookList;
 
         public event System.Action<string> OnShow;
 
@@ -87,13 +88,12 @@ namespace Client_Handling
                     client_socket.Receive(buffer, 0, 4096, SocketFlags.None);
                     buffers.AddRange(buffer);
                 }
-
-                return Encoding.Unicode.GetString(buffers.ToArray());
             }
             catch (SocketException e)
             {
                 return e.Message;
             }
+            return Encoding.Unicode.GetString(buffers.ToArray());
         }
 
         public void sign_up(string username, string pass)
@@ -122,9 +122,11 @@ namespace Client_Handling
 
         public void Search_Book(string req)
         {
+            string data = "";
             try
             {
-                OnShow?.Invoke(send_data(req));
+                data = send_data(req);
+                bookList = new CommonResource.BookList(User_req.Deserialize_list(data));
             }
             catch(SocketException e)
             {

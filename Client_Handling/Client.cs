@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using CommonResource;
 using System.Threading;
 
 namespace Client_Handling
@@ -12,9 +13,9 @@ namespace Client_Handling
     class Time_Client_Manager
     {
         private Socket client_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private byte[] buffer = new byte[4096];
-        private List<byte> buffers = new List<byte>();
-        public CommonResource.BookList bookList;
+
+        public event Action<BookList> OnShowBookList;
+        public event Action<string> OnLoadBook;
 
         public event System.Action<string> OnShow;
 
@@ -76,24 +77,25 @@ namespace Client_Handling
 
         public string receive_data()
         {
+            int size_message = 0;
             try
             {
-                buffers.Clear();
+                byte[] buffer = new byte[1024];
 
                 client_socket.Receive(buffer);
-                int size_message = int.Parse(Encoding.Unicode.GetString(buffer));
 
-                while (buffers.Count < size_message)
-                {
-                    client_socket.Receive(buffer, 0, 4096, SocketFlags.None);
-                    buffers.AddRange(buffer);
-                }
+                size_message = int.Parse(Encoding.Unicode.GetString(buffer));
+                client_socket.Send(Encoding.Unicode.GetBytes("1"));
+                
+                var buffers = new byte[size_message];
+                client_socket.Receive(buffers);
+                return Encoding.Unicode.GetString(buffers);
             }
             catch (SocketException e)
             {
                 return e.Message;
             }
-            return Encoding.Unicode.GetString(buffers.ToArray());
+
         }
 
         public void sign_up(string username, string pass)
@@ -110,7 +112,7 @@ namespace Client_Handling
 
         public void sign_in(string username, string pass)
         {
-            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignUp);
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignIn);
             try {
                 OnShow?.Invoke(send_data(req));
             }
@@ -126,12 +128,27 @@ namespace Client_Handling
             try
             {
                 data = send_data(req);
-                bookList = new CommonResource.BookList(User_req.Deserialize_list(data));
+                OnShowBookList?.Invoke(User_req.Deserialize_list(data));
             }
             catch(SocketException e)
             {
                 OnShow?.Invoke(e.Message);
             };
+        }
+
+        public void Read_Book(string req)
+        {
+            string data;
+            try
+            {
+                data = send_data(CommonResource.TypeOfRequest.ReadBook.ToString() + '|' + req);
+                OnLoadBook?.Invoke(data);
+            }
+            catch
+            {
+                OnLoadBook?.Invoke("Can't load book");
+            };
+            
         }
 
     }

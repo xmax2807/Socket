@@ -18,9 +18,9 @@ namespace Client_Handling
             return req.ToString() + '|' + json;
         }
 
-        public static List<Book> Deserialize_list(string input)
+        public static BookList Deserialize_list(string input)
         {
-            return JsonSerializer.Deserialize<List<Book>>(input);
+            return JsonSerializer.Deserialize<BookList>(input);
         }
     }
 }

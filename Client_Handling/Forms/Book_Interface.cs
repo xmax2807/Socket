@@ -13,6 +13,8 @@ namespace Client_Handling.Forms
     public partial class Book_Interface : UserControl
     {
         public event EventHandler Choose;
+        public Action<string> give_info;
+        private string id;
         public Book_Interface()
         {
             InitializeComponent();
@@ -27,6 +29,7 @@ namespace Client_Handling.Forms
             this.NameBook.Text = input.Name;
             this.AuthorName.Text = input.Author;
             this.GenreName.Text = input.Type;
+            id = input.ID.ToString();
             this.Dock = System.Windows.Forms.DockStyle.Top;
             this.Visible = true;
         }
@@ -34,7 +37,7 @@ namespace Client_Handling.Forms
         //Choose
         public void ChooseBook(object sender, EventArgs e)
         {
-            Choose?.Invoke(sender, e);
+            give_info?.Invoke(id);
         }
 
         private void NameBook_MouseEnter(object sender, EventArgs e)
@@ -50,5 +53,15 @@ namespace Client_Handling.Forms
             this.NameBook.ForeColor = Color.White;
             this.NameBook.Cursor = Cursors.Default;
         }
+
+        private void Download_Button_Enter(object sender, EventArgs e)
+        {
+            this.Download.Cursor = System.Windows.Forms.Cursors.Hand;
+        }
+        private void Download_Button_Leave(object sender, EventArgs e)
+        {
+            this.Download.Cursor = System.Windows.Forms.Cursors.Default;
+        }
+
     }
 }

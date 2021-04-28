@@ -21,27 +21,27 @@ namespace Client_Handling
             InitializeComponent();
             active = listBook_Interface1;
             active.Visible = true;
-            
+
+            client.OnShow += s => MessageBox.Show(s);
+            client.OnShowBookList += Display_listBook;
             SignUp();
             SignIn();
-            ConnectHost();
-        }
 
+            ConnectHost();
+            client.OnLoadBook += Display_Book;
+        }
 
         public void ConnectHost()
         {
             this.connect_toHost1.connect += (IP) => client.connect(IP);
-            client.OnShow += s => MessageBox.Show(s);
         }
         public void SignUp()
         {
             SignUpBox.OnSignup += (u) => client.sign_up(u.UserName, u.Password);
-            client.OnShow += s => MessageBox.Show(s);
         }
         public void SignIn()
         {
             SignUpBox.SignIn += (u) => client.sign_in(u.UserName, u.Password);
-            client.OnShow += s => MessageBox.Show(s);
         }
 
         public void Switch_Function()
@@ -79,15 +79,28 @@ namespace Client_Handling
             client.Search_Book(typereq + "|" + this.SearchBar.Text);
         }
 
-        private void Display_listBook()
+        private void Display_listBook(CommonResource.BookList list)
         {
-            int size_list = client.bookList.Books.Count;
-            
-            for(int i = 0; i < size_list; i++)
+            //int size_list = client.bookList.Books.Count;
+            var eventLoad = listBook_Interface1.AddBook(list);
+            for (int i = 0; i < eventLoad.Length; i++)
             {
-                this.listBook_Interface1.AddBook(client.bookList.Books[i]);
+                eventLoad[i] += (id) => client.Read_Book(id);
             }
+
+            //for(int i = 0; i < size_list; i++)
+            //{
+              //  this.listBook_Interface1.AddBook(client.bookList.Books[i]);
+            //}
         }
+
+        private void Display_Book(string Data)
+        {
+            this.bookDisplay1.Visible = true;
+            this.bookDisplay1.get_data(Data);
+        }
+
+
 
         //Interface + Interaction
         private void Search_box_focus(object sender, EventArgs e)
@@ -131,7 +144,6 @@ namespace Client_Handling
             Switch_Function();
             active = this.listBook_Interface1;
             active.Visible = true;
-            Display_listBook();
         }
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {

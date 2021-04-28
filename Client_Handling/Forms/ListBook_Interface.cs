@@ -13,11 +13,12 @@ namespace Client_Handling.Forms
     public partial class ListBook_Interface : UserControl
     {
         public event EventHandler Close;
+
+        public Action<string> Book_Chosen;
         
         public ListBook_Interface()
         {
             InitializeComponent();
-            this.BookContainer.Controls.Add(new Book_Interface());
         }
 
         private void Back_MouseEnter(object sender, EventArgs e)
@@ -35,13 +36,15 @@ namespace Client_Handling.Forms
         }
 
         // add books
-        public void AddBook(CommonResource.Book input)
+        public void AddBook(CommonResource.BookList input, Action<string> callback_read, Action<string,string> callback_download)
         {
-            this.BookContainer.Controls.Add(new Book_Interface(input));
+            for (int i = 0; i < input.Books.Count; i++)
+            {
+                var newShow = new Book_Interface(input.Books[i]);
+                newShow.OnRead += callback_read;
+                newShow.OnDownload += callback_download;
+                this.BookContainer.Controls.Add(newShow);
+            }
         }
-
-        //Choose
-        
-
     }
 }

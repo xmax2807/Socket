@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using CommonResource;
 using System.Threading;
 
 namespace Client_Handling
@@ -12,9 +13,9 @@ namespace Client_Handling
     class Time_Client_Manager
     {
         private Socket client_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private byte[] buffer = new byte[4096];
-        private List<byte> buffers = new List<byte>();
-        public CommonResource.BookList bookList;
+
+        public event Action<BookList> OnShowBookList;
+        public event Action<string> OnLoadBook;
 
         public event System.Action<string> OnShow;
 
@@ -29,17 +30,7 @@ namespace Client_Handling
             client_socket.Bind(client_IP);
         }
 
-        private static void Send_callback(IAsyncResult asyn)
-        {
-            try
-            {
-                Socket handler = (Socket)asyn;
-
-                int byteSent = handler.EndSend(asyn);
-            }
-            catch (Exception e) { }
-        }
-
+        
         public bool SocketConnected()
         {
             bool part1 = client_socket.Poll(1000, SelectMode.SelectRead);
@@ -71,36 +62,46 @@ namespace Client_Handling
         public string send_data(string req)
         {
             client_socket.Send(Encoding.Unicode.GetBytes(req));
+            return  Encoding.Unicode.GetString(receive_data());
+        }
+
+        public byte[] send_data_get_bytes(string req)
+        {
+            client_socket.Send(Encoding.Unicode.GetBytes(req));
             return receive_data();
         }
 
-        public string receive_data()
+        public byte[] receive_data()
         {
             try
             {
-                buffers.Clear();
+                byte[] buffer = new byte[1024];
+                int size_message = 0;
 
                 client_socket.Receive(buffer);
-                int size_message = int.Parse(Encoding.Unicode.GetString(buffer));
 
-                while (buffers.Count < size_message)
-                {
-                    client_socket.Receive(buffer, 0, 4096, SocketFlags.None);
-                    buffers.AddRange(buffer);
-                }
+                size_message = int.Parse(Encoding.Unicode.GetString(buffer));
+                client_socket.Send(Encoding.Unicode.GetBytes("1"));
+
+                var buffers = new byte[size_message];
+                client_socket.Receive(buffers, 0, size_message, SocketFlags.None);
+
+                return buffers;
             }
             catch (SocketException e)
             {
-                return e.Message;
+                return null;
             }
-            return Encoding.Unicode.GetString(buffers.ToArray());
         }
 
         public void sign_up(string username, string pass)
         {
             var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignUp);
-            try { 
-                OnShow?.Invoke(send_data(req));
+            try {
+                if (send_data(req) == "1")
+                    OnShow?.Invoke("Sign up sucessfully");
+                else
+                    OnShow?.Invoke("Sign up unsucessfully");
             }
             catch (SocketException e)
             {
@@ -110,9 +111,12 @@ namespace Client_Handling
 
         public void sign_in(string username, string pass)
         {
-            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignUp);
+            var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignIn);
             try {
-                OnShow?.Invoke(send_data(req));
+                if (send_data(req) == "1")
+                    OnShow?.Invoke("Sign up sucessfully");
+                else
+                    OnShow?.Invoke("Sign up unsucessfully");
             }
             catch (SocketException e)
             {
@@ -126,13 +130,44 @@ namespace Client_Handling
             try
             {
                 data = send_data(req);
-                bookList = new CommonResource.BookList(User_req.Deserialize_list(data));
+                OnShowBookList?.Invoke(User_req.Deserialize_list(data));
             }
             catch(SocketException e)
             {
                 OnShow?.Invoke(e.Message);
             };
         }
+
+        public void Read_Book(string req)
+        {
+            string data;
+            try
+            {
+                data = send_data(CommonResource.TypeOfRequest.ReadBook.ToString() + '|' + req);
+                OnLoadBook?.Invoke(data);
+            }
+            catch
+            {
+                OnLoadBook?.Invoke("Can't load book");
+            };
+            
+        }
+
+        public void download(string req, string path)
+        {
+            try
+            {
+                var data = send_data_get_bytes(CommonResource.TypeOfRequest.DownloadBook.ToString() + '|' + req);
+                System.IO.File.WriteAllBytes(path + "test.txt", data);
+                OnShow?.Invoke("Downloaded");
+            }
+            catch
+            {
+                OnShow?.Invoke("Can't download");
+                return;
+            }
+        }
+
 
     }
 }

@@ -42,9 +42,10 @@
             this.search_button = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.bookDisplay1 = new Client_Handling.Forms.BookDisplay();
+            this.listBook_Interface1 = new Client_Handling.Forms.ListBook_Interface();
             this.connect_toHost1 = new Client_Handling.Forms.Connect_toHost();
             this.SignUpBox = new Client_Handling.Forms.Sign_in_up();
-            this.listBook_Interface1 = new Client_Handling.Forms.ListBook_Interface();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -115,10 +116,10 @@
             this.listBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.listBox1.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox1.Font = new System.Drawing.Font("Maiandra GD", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.IntegralHeight = false;
-            this.listBox1.ItemHeight = 20;
+            this.listBox1.ItemHeight = 24;
             this.listBox1.Items.AddRange(new object[] {
             "ID",
             "Title",
@@ -128,7 +129,7 @@
             this.listBox1.Location = new System.Drawing.Point(938, 72);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(107, 45);
+            this.listBox1.Size = new System.Drawing.Size(107, 50);
             this.listBox1.TabIndex = 1;
             this.listBox1.TabStop = false;
             this.listBox1.UseTabStops = false;
@@ -173,7 +174,7 @@
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Maiandra GD", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(4, 8);
+            this.label2.Location = new System.Drawing.Point(3, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 24);
             this.label2.TabIndex = 0;
@@ -238,27 +239,15 @@
             this.label1.Text = "Online Library";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // connect_toHost1
+            // bookDisplay1
             // 
-            this.connect_toHost1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.connect_toHost1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.connect_toHost1.Location = new System.Drawing.Point(0, 130);
-            this.connect_toHost1.Name = "connect_toHost1";
-            this.connect_toHost1.Size = new System.Drawing.Size(1261, 756);
-            this.connect_toHost1.TabIndex = 2;
-            this.connect_toHost1.Close += new System.EventHandler(this.Back_Click);
-            this.connect_toHost1.Visible = false;
-            // 
-            // SignUpBox
-            // 
-            this.SignUpBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.SignUpBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignUpBox.Location = new System.Drawing.Point(0, 130);
-            this.SignUpBox.Name = "SignUpBox";
-            this.SignUpBox.Size = new System.Drawing.Size(1261, 756);
-            this.SignUpBox.TabIndex = 1;
-            this.SignUpBox.Visible = false;
-            this.SignUpBox.Close += new System.EventHandler(this.Back_Click);
+            this.bookDisplay1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bookDisplay1.Location = new System.Drawing.Point(0, 130);
+            this.bookDisplay1.Name = "bookDisplay1";
+            this.bookDisplay1.Size = new System.Drawing.Size(1261, 756);
+            this.bookDisplay1.TabIndex = 4;
+            this.bookDisplay1.Visible = false;
+            this.bookDisplay1.close += new System.EventHandler(this.Back_Click);
             // 
             // listBook_Interface1
             // 
@@ -271,6 +260,28 @@
             this.listBook_Interface1.Visible = false;
             this.listBook_Interface1.Close += new System.EventHandler(this.Back_Click);
             // 
+            // connect_toHost1
+            // 
+            this.connect_toHost1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.connect_toHost1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.connect_toHost1.Location = new System.Drawing.Point(0, 130);
+            this.connect_toHost1.Name = "connect_toHost1";
+            this.connect_toHost1.Size = new System.Drawing.Size(1261, 756);
+            this.connect_toHost1.TabIndex = 2;
+            this.connect_toHost1.Visible = false;
+            this.connect_toHost1.Close += new System.EventHandler(this.Back_Click);
+            // 
+            // SignUpBox
+            // 
+            this.SignUpBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.SignUpBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SignUpBox.Location = new System.Drawing.Point(0, 130);
+            this.SignUpBox.Name = "SignUpBox";
+            this.SignUpBox.Size = new System.Drawing.Size(1261, 756);
+            this.SignUpBox.TabIndex = 1;
+            this.SignUpBox.Visible = false;
+            this.SignUpBox.Close += new System.EventHandler(this.Back_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -278,6 +289,7 @@
             this.BackgroundImage = global::Client_Handling.Properties.Resources.wallpaperflare_com_wallpaper;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1261, 886);
+            this.Controls.Add(this.bookDisplay1);
             this.Controls.Add(this.listBook_Interface1);
             this.Controls.Add(this.connect_toHost1);
             this.Controls.Add(this.SignUpBox);
@@ -285,17 +297,16 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.Text = "Online Library";
-            this.panel1.ResumeLayout(true);
+            this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(true);
+            this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(true);
+            this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).EndInit();
-            this.ResumeLayout(true);
-            this.SuspendLayout();
-            
+            this.ResumeLayout(false);
+
         }
 
 
@@ -315,6 +326,7 @@
         private System.Windows.Forms.Button Connect;
         private Forms.Connect_toHost connect_toHost1;
         private Forms.ListBook_Interface listBook_Interface1;
+        private Forms.BookDisplay bookDisplay1;
     }
 }
 

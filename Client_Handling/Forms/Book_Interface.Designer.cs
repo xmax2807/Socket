@@ -77,9 +77,10 @@
             this.Info.Controls.Add(this.Author, 0, 0);
             this.Info.Controls.Add(this.AuthorName, 1, 0);
             this.Info.Controls.Add(this.Genre, 0, 1);
+            this.Info.Controls.Add(this.GenreName, 1, 1);
             this.Info.Controls.Add(this.Year, 0, 2);
             this.Info.Controls.Add(this.YearText, 1, 2);
-            this.Info.Controls.Add(this.GenreName, 0, 3);
+            
             this.Info.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Info.Location = new System.Drawing.Point(0, 0);
             this.Info.Name = "Info";

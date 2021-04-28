@@ -25,9 +25,9 @@ namespace CommonResource
         public string Name { get; }
         public string Author { get; }
         public string Type { get; }
-        public int Year { get; }
+        public string Year { get; }
 
-        public Book(int id, string name, string author, string type, int year)
+        public Book(int id, string name, string author, string type, string year)
         {
             this.ID = id;
             this.Name = name;

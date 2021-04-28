@@ -48,5 +48,10 @@ namespace ServerHandling
         public void DisconnectServer()
         {
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Database.DatabaseManager.Init.GetBookByID(4);
+        }
     }
 }

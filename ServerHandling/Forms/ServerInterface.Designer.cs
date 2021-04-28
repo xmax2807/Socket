@@ -33,6 +33,7 @@
             this.hideProgramButton = new System.Windows.Forms.Button();
             this.closeProgramButton = new System.Windows.Forms.Button();
             this.serverInformationControl = new ServerHandling.Controls.ServerInformationControl();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,11 +85,22 @@
             this.serverInformationControl.Size = new System.Drawing.Size(1000, 493);
             this.serverInformationControl.TabIndex = 2;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(522, 233);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "TEST";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ServerInterface
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1000, 560);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.serverInformationControl);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -114,6 +126,7 @@
         private System.Windows.Forms.Button hideProgramButton;
         private System.Windows.Forms.Button closeProgramButton;
         private Controls.ServerInformationControl serverInformationControl;
+        private System.Windows.Forms.Button button1;
     }
 }
 

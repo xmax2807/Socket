@@ -102,7 +102,11 @@ namespace ServerHandling.HandleSocket
             //Add to manager
             interSocks.Add(interSock);
 
+            serverActivities.Append("Connected by " + interSock.GetAddress);
+
             interSock.OnActivity += (a) => serverActivities.Append(a);
+
+            interSock.ReceivingData();
         }
     }
 }

@@ -9,13 +9,18 @@ namespace ServerHandling.Database
     public class DatabaseManager
     {
         //Use singleton
-        public static readonly System.Lazy<DatabaseManager> lazySingleton = new System.Lazy<DatabaseManager>();
+        private static readonly System.Lazy<DatabaseManager> lazySingleton = new System.Lazy<DatabaseManager>();
 
         public static DatabaseManager Init => lazySingleton.Value;
 
-        private readonly string sqlConnectionString = @"Data Source = NHATLINH\SQLPROJECT;User ID = sa; Password=********;Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private readonly string sqlConnectionString = @"Data Source=NHATLINH\SQLPROJECT;Initial Catalog=online_library;User ID=sa;Password=1905;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         private readonly SqlConnection sqlConnection;
+
+        public DatabaseManager()
+        {
+            sqlConnection = new SqlConnection(sqlConnectionString);
+        }
 
         public bool InsertNewUser(User user)
         {
@@ -111,10 +116,11 @@ namespace ServerHandling.Database
         public BookList BookListFromReader(SqlDataReader reader)
         {
             List<Book> gotBooks = new List<Book>();
+
             while (reader.Read())
             {
-                gotBooks.Add(new Book((int)reader.GetValue(0), (string)reader.GetValue(1),
-                    (string)reader.GetValue(2), (string)reader.GetValue(3), (int)reader.GetValue(4)));
+                gotBooks.Add(new Book(reader.GetInt32(0), reader.GetString(1),
+                    reader.GetString(2), reader.GetString(3), reader.GetString(4)));
             }
 
             reader.Close();

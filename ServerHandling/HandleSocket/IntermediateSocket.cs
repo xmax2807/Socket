@@ -16,14 +16,13 @@ namespace ServerHandling.HandleSocket
         public event Action<string> OnActivity;
 
         //Limited size of information received from client
-        private const int bufferSize = 1024;
+        private const int bufferSize = 4096;
 
-        private readonly byte[] dataBuffer;
+        private readonly byte[] dataBuffer = new byte[bufferSize];
 
         public IntermediateSocket(Socket socket)
         {
             this.interSocket = socket;
-            ReceivingData();
         }
 
         public event System.Action OnDisconnected;
@@ -55,9 +54,9 @@ namespace ServerHandling.HandleSocket
                 {
                     //interSocket.BeginReceive(dataBuffer, 0, bufferSize, SocketFlags.None,
                     //new AsyncCallback(ReceiveDataCallback), null);
-                    interSocket.Receive(dataBuffer);
+                    int msg = interSocket.Receive(dataBuffer);
 
-                    byte[] replay = HandleRequest(Encoding.Unicode.GetString(dataBuffer));
+                    byte[] replay = HandleRequest(Decode(dataBuffer, 0, msg));
 
                     SendingData(replay);
                 }
@@ -69,11 +68,29 @@ namespace ServerHandling.HandleSocket
             }
         }
 
+        public static string Decode(byte[] request, int startIndex, int size)
+        {
+            return Encoding.Unicode.GetString(request, startIndex, size);
+        }
+
+        public static byte[] Encode(string msg)
+        {
+            return Encoding.Unicode.GetBytes(msg.ToCharArray());
+        }
+
         public void SendingData(byte[] data)
         {
             try
             {
-                interSocket.Send(data);
+                int length = data.Length;
+                interSocket.Send(Encode(length.ToString()));
+
+                int tempSizeSend = 0;
+                for (int i = 0; i < length; i += bufferSize)
+                {
+                    tempSizeSend = length - i < bufferSize ? length - i : bufferSize;
+                    interSocket.Send(data, i, tempSizeSend, SocketFlags.None);
+                }
             }
             catch (SocketException)
             {
@@ -97,11 +114,11 @@ namespace ServerHandling.HandleSocket
             {
                 var replay = handler?.Invoke(result.Information);
                 if (replay is string)
-                    return Encoding.ASCII.GetBytes(replay as string);
+                    return Encode(replay as string);
                 return replay as byte[]; //If not string => byte array
             }
 
-            return Encoding.ASCII.GetBytes(failMessage);
+            return Encode(failMessage);
         }
 
         //Handle sign up request
@@ -134,8 +151,15 @@ namespace ServerHandling.HandleSocket
         //Return a json of BookList object
         public static string HandleSearchBookByID(object ID)
         {
-            var books = DatabaseManager.Init.GetBookByID((int)ID);
-            return UserServerRequest.SeralizeMessage(books);
+            try
+            {
+                var books = DatabaseManager.Init.GetBookByID(int.Parse(ID as string));
+                return UserServerRequest.SeralizeMessage(books);
+            }
+            catch
+            {
+                return succesMessage;
+            }
         }
 
 
@@ -164,7 +188,6 @@ namespace ServerHandling.HandleSocket
             return UserServerRequest.SeralizeMessage(books);
         }
 
-
         public static string HandleReadBook(object bookID)
         {
             try
@@ -187,7 +210,7 @@ namespace ServerHandling.HandleSocket
             }
             catch (Exception)
             {
-                return Encoding.ASCII.GetBytes(failMessage);
+                return Encode(failMessage);
             }
         }
     }

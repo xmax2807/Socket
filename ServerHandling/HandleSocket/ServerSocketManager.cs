@@ -14,7 +14,7 @@ namespace ServerHandling.HandleSocket
     class ServerSocketManager
     {
         //Containing sockets communicating with clients
-        private readonly List<IntermediateSocket> interSocks = new List<IntermediateSocket>();
+        private readonly Dictionary<string, IntermediateSocket> interSocks = new Dictionary<string, IntermediateSocket>();
 
         //A socket listening requests to connect
         private readonly Socket listenSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -89,6 +89,12 @@ namespace ServerHandling.HandleSocket
             listenSock.BeginAccept(new AsyncCallback(AcceptConnectingCallback), null);
         }
 
+        public void TurnOffConnection()
+        {
+            foreach (var conn in interSocks)
+                conn.Value.Disconnect();
+        }
+
         private void AcceptConnectingCallback(IAsyncResult async)
         {
             //Callback to continue accepting incoming connections
@@ -99,14 +105,23 @@ namespace ServerHandling.HandleSocket
             //Create an instance/new thread to handle new client
             var interSock = new IntermediateSocket(socket);
 
-            //Add to manager
-            interSocks.Add(interSock);
 
-            serverActivities.Append("Connected by " + interSock.GetAddress);
+            //Add to manager
+            interSocks.Add(interSock.GetAddress, interSock);
 
             interSock.OnActivity += (a) => serverActivities.Append(a);
 
+            interSock.OnDisconnected += (a) => interSocks.Remove(a);
+
             interSock.ReceivingData();
+        }
+
+        public void Test()
+        {
+            foreach (var i in interSocks)
+            {
+                i.Value.SendingData(IntermediateSocket.Encode("asdas"));
+            }
         }
     }
 }

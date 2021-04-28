@@ -145,11 +145,11 @@ namespace ServerHandling.Database
                     //Add values to parameters
                     command.Parameters.AddWithValue("@book_id", bookId);
 
-                    var result = command.ExecuteReader();
+                    var result = BookListFromReader(command.ExecuteReader()); 
 
                     sqlConnection.Close();
 
-                    return BookListFromReader(result);
+                    return result;
                 }
 
             }
@@ -177,11 +177,11 @@ namespace ServerHandling.Database
                     //Add values to parameters
                     command.Parameters.AddWithValue("@book_name", bookName);
 
-                    var result = command.ExecuteReader();
+                    var result = BookListFromReader(command.ExecuteReader());
 
                     sqlConnection.Close();
 
-                    return BookListFromReader(result);
+                    return result;
                 }
             }
             catch (SqlException)
@@ -208,11 +208,11 @@ namespace ServerHandling.Database
                     //Add values to parameters
                     command.Parameters.AddWithValue("@author_name", authorName);
 
-                    var result = command.ExecuteReader();
+                    var result = BookListFromReader(command.ExecuteReader());
 
                     sqlConnection.Close();
 
-                    return BookListFromReader(result);
+                    return result;
                 }
             }
             catch (SqlException)
@@ -239,11 +239,11 @@ namespace ServerHandling.Database
                     //Add values to parameters
                     command.Parameters.AddWithValue("@book_type", typeName);
 
-                    var result = command.ExecuteReader();
+                    var result = BookListFromReader(command.ExecuteReader());
 
                     sqlConnection.Close();
 
-                    return BookListFromReader(result);
+                    return result;
                 }
             }
             catch (SqlException)

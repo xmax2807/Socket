@@ -25,7 +25,7 @@ namespace ServerHandling.HandleSocket
             this.interSocket = socket;
         }
 
-        public event System.Action OnDisconnected;
+        public event System.Action<string> OnDisconnected;
 
         public const string succesMessage = "1";
 
@@ -46,6 +46,8 @@ namespace ServerHandling.HandleSocket
 
         public string GetAddress => (interSocket.RemoteEndPoint as IPEndPoint).Address.ToString();
 
+        private readonly byte[] waitBuffer = new byte[1];
+
         public void ReceivingData()
         {
             while (interSocket.Connected)
@@ -62,7 +64,7 @@ namespace ServerHandling.HandleSocket
                 }
                 catch (SocketException)
                 {
-                    OnDisconnected?.Invoke();
+                    OnDisconnected?.Invoke(GetAddress);
                     return;
                 }
             }
@@ -75,7 +77,7 @@ namespace ServerHandling.HandleSocket
 
         public static byte[] Encode(string msg)
         {
-            return Encoding.Unicode.GetBytes(msg.ToCharArray());
+            return Encoding.Unicode.GetBytes(msg);
         }
 
         public void SendingData(byte[] data)
@@ -83,18 +85,22 @@ namespace ServerHandling.HandleSocket
             try
             {
                 int length = data.Length;
+
                 interSocket.Send(Encode(length.ToString()));
 
-                int tempSizeSend = 0;
-                for (int i = 0; i < length; i += bufferSize)
-                {
-                    tempSizeSend = length - i < bufferSize ? length - i : bufferSize;
-                    interSocket.Send(data, i, tempSizeSend, SocketFlags.None);
-                }
+                interSocket.Receive(waitBuffer);
+
+                interSocket.Send(data);
+                //int tempSizeSend = 0;
+                //for (int i = 0; i < length; i += bufferSize)
+                //{
+                //    tempSizeSend = length - i < bufferSize ? length - i : bufferSize;
+                //    interSocket.Send(data, i, tempSizeSend, SocketFlags.None);
+                //}
             }
             catch (SocketException)
             {
-                OnDisconnected?.Invoke();
+                OnDisconnected?.Invoke(GetAddress);
                 return;
             }
         }

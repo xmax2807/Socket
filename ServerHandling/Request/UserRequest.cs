@@ -51,7 +51,7 @@ namespace CommonResource
     public enum TypeOfRequest
     {
         SignUp, SignIn, SearchBooksByID, SearchBooksByName, SearchBooksByAuthor, SearchBookByType,
-        ReadBook, DownloadBook, Error
+        ReadBook, DownloadBook, StopConnecting, Error
     }
 
     public static class TranslateRequest

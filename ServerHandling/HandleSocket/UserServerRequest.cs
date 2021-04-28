@@ -18,7 +18,11 @@ namespace ServerHandling
         private static readonly Dictionary<TypeOfRequest, Type> RequestTypesToInforTypes = new Dictionary<TypeOfRequest, Type>
         {
             {TypeOfRequest.SignUp, typeof(User) },
-            {TypeOfRequest.SignIn, typeof(User) },
+            {TypeOfRequest.SignIn, typeof(User) }
+            //{TypeOfRequest.SearchBooksByID, typeof(Book) },
+            //{TypeOfRequest.SearchBooksByName, typeof(Book) },
+            //{TypeOfRequest.SearchBooksByAuthor, typeof(Book) },
+            //{TypeOfRequest.SearchBookByType, typeof(Book) }
         };
 
         //Return after deseralizing json string => a type object

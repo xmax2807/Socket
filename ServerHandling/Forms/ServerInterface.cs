@@ -2,6 +2,7 @@
 using CommonResource;
 using System.Windows.Forms;
 using ServerHandling.Controls;
+using System.IO;
 
 namespace ServerHandling
 {
@@ -51,7 +52,9 @@ namespace ServerHandling
 
         private void button1_Click(object sender, EventArgs e)
         {
-            serverSocketManager.Test();
+            var a = File.ReadAllText(@"D:\Source\Socket\ServerHandling\Database\Books\Computer.Networking.A.TopDown.Approach.6th.Edition.txt");
+
+            richTextBox1.Text = a;
         }
     }
 }

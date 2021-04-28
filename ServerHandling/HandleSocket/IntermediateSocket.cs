@@ -46,7 +46,7 @@ namespace ServerHandling.HandleSocket
 
         public string GetAddress => (interSocket.RemoteEndPoint as IPEndPoint).Address.ToString();
 
-        private readonly byte[] waitBuffer = new byte[1];
+        private readonly byte[] waitBuffer = new byte[1024];
 
         public void ReceivingData()
         {
@@ -198,7 +198,8 @@ namespace ServerHandling.HandleSocket
         {
             try
             {
-                var path = DatabaseManager.Init.GetPathOfBook((int)bookID);
+                var path = DatabaseManager.Init.GetPathOfBook(int.Parse(bookID as string));
+                path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"\Database\Books\" + path + @".txt";
                 return File.ReadAllText(path);
             }
             catch (Exception)
@@ -212,6 +213,7 @@ namespace ServerHandling.HandleSocket
             try
             {
                 var path = DatabaseManager.Init.GetPathOfBook((int)bookID);
+                path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"Database\Books\" + path + @".txt";
                 return File.ReadAllBytes(path);
             }
             catch (Exception)

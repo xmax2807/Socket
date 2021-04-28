@@ -14,10 +14,10 @@ namespace ServerHandling.HandleSocket
     class ServerSocketManager
     {
         //Containing sockets communicating with clients
-        private readonly Dictionary<string, IntermediateSocket> interSocks = new Dictionary<string, IntermediateSocket>();
+        private readonly List<IntermediateSocket> interSocks = new List<IntermediateSocket>();
 
         //A socket listening requests to connect
-        private readonly Socket listenSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private Socket listenSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         //Address of listen socket
         private readonly IPEndPoint serverEndPoint;
@@ -28,13 +28,12 @@ namespace ServerHandling.HandleSocket
         //Max number of client approved
         private const int maxClients = 20;
 
-        public event Action<string> OnPrintMessage;
+        private bool isOpened = false;
 
-        private readonly StringBuilder serverActivities = new StringBuilder();
+        public event Action<string> OnPrintMessage;
 
         public ServerSocketManager()
         {
-            //Get instance of database
             //Get ip of server
             serverEndPoint = LookupServerIP();
         }
@@ -44,14 +43,6 @@ namespace ServerHandling.HandleSocket
 
         {
             var addresses = Dns.GetHostAddresses(String.Empty);
-            //Check can connect to the ip
-            //System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping();
-
-            //Look the first ipv4 and can be connected
-            //foreach (var address in addresses)
-            //  if (address.AddressFamily == AddressFamily.InterNetwork && ping.Send(address).Status == System.Net.NetworkInformation.IPStatus.Success)
-            //    return new IPEndPoint(address, 11111);
-            //Can't find any available
             return new IPEndPoint(addresses[addresses.Length - 1], port);
         }
 
@@ -60,16 +51,28 @@ namespace ServerHandling.HandleSocket
         {
             try
             {
-                //Bind an endpoint for server
-                listenSock.Bind(serverEndPoint);
+                //Socket is opened
+                if (!isOpened)
+                {
+                    //Mark that server is opened
+                    isOpened = true;
 
-                //Listen socket can accept connection
-                listenSock.Listen(maxClients);
+                    listenSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                //Start to accept connection
-                StartAccepting();
+                    //Bind an endpoint for server
+                    listenSock.Bind(serverEndPoint);
 
-                OnPrintMessage?.Invoke("Setup server successfully");
+                    //Listen socket can accept connection
+                    listenSock.Listen(maxClients);
+
+                    //Start to accept connection
+                    StartAccepting();
+
+                    OnPrintMessage?.Invoke("Setup server successfully");
+                }
+                else
+                    OnPrintMessage?.Invoke("try to setup server but it's already opened");
+
 
                 return new ServerState(serverEndPoint, true);
 
@@ -77,7 +80,6 @@ namespace ServerHandling.HandleSocket
             catch (SocketException)
             {
                 OnPrintMessage?.Invoke("Can't open the connection of server");
-
                 return new ServerState(null, false);
             }
         }
@@ -86,13 +88,29 @@ namespace ServerHandling.HandleSocket
         //Calback to AcceptConnectingCallback after receving a connection
         private void StartAccepting()
         {
-            listenSock.BeginAccept(new AsyncCallback(AcceptConnectingCallback), null);
+            try
+            {
+                listenSock.BeginAccept(new AsyncCallback(AcceptConnectingCallback), null);
+            }
+            catch (SocketException)
+            {
+                return;
+            }
         }
 
-        public void TurnOffConnection()
+        public void DisconnectAll()
         {
-            foreach (var conn in interSocks)
-                conn.Value.Disconnect();
+            if (isOpened)
+            {
+                //Mark that the connection is closed
+                isOpened = false;
+
+                foreach (var conn in interSocks)
+                    conn.Disconnect();
+                listenSock.Close();
+                OnPrintMessage?.Invoke("Disconnnect all client");
+                interSocks.Clear();
+            }
         }
 
         private void AcceptConnectingCallback(IAsyncResult async)
@@ -107,21 +125,15 @@ namespace ServerHandling.HandleSocket
 
 
             //Add to manager
-            interSocks.Add(interSock.GetAddress, interSock);
+            interSocks.Add(interSock);
 
-            interSock.OnActivity += (a) => serverActivities.Append(a);
+            OnPrintMessage?.Invoke("Connected by " + interSock.GetAddress);
+
+            interSock.OnActivity += OnPrintMessage;
 
             interSock.OnDisconnected += (a) => interSocks.Remove(a);
 
             interSock.ReceivingData();
-        }
-
-        public void Test()
-        {
-            foreach (var i in interSocks)
-            {
-                i.Value.SendingData(IntermediateSocket.Encode("asdas"));
-            }
         }
     }
 }

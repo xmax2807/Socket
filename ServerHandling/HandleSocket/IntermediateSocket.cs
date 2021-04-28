@@ -13,6 +13,8 @@ namespace ServerHandling.HandleSocket
     {
         private readonly Socket interSocket;
 
+        public string user = String.Empty;
+
         public event Action<string> OnActivity;
 
         //Limited size of information received from client
@@ -23,26 +25,26 @@ namespace ServerHandling.HandleSocket
         public IntermediateSocket(Socket socket)
         {
             this.interSocket = socket;
+            handlerTranslator = new Dictionary<TypeOfRequest, Func<object, object>>
+            {
+                {TypeOfRequest.SignUp, HandleSignUp},
+                {TypeOfRequest.SignIn, HandleSignIn},
+                {TypeOfRequest.SearchBooksByID, HandleSearchBookByID},
+                {TypeOfRequest.SearchBooksByName, HandleSearchBookByName},
+                {TypeOfRequest.SearchBooksByAuthor, HandleSearchBookByAuthor},
+                {TypeOfRequest.SearchBookByType, HandleSearchBookByType},
+                {TypeOfRequest.ReadBook, HandleReadBook},
+                {TypeOfRequest.DownloadBook, HandleDownloadBook},
+            };
         }
 
-        public event System.Action<string> OnDisconnected;
+        public event System.Action<IntermediateSocket> OnDisconnected;
 
         public const string succesMessage = "1";
 
         public const string failMessage = "0";
 
-        public static readonly Dictionary<TypeOfRequest, Func<object, object>> handlerTranslator = new Dictionary<TypeOfRequest, Func<object, object>>()
-        {
-            {TypeOfRequest.SignUp, HandleSignUp},
-            {TypeOfRequest.SignIn, HandleSignIn},
-            {TypeOfRequest.SearchBooksByID, HandleSearchBookByID},
-            {TypeOfRequest.SearchBooksByName, HandleSearchBookByName},
-            {TypeOfRequest.SearchBooksByAuthor, HandleSearchBookByAuthor},
-            {TypeOfRequest.SearchBookByType, HandleSearchBookByType},
-            {TypeOfRequest.ReadBook, HandleReadBook},
-            {TypeOfRequest.DownloadBook, HandleDownloadBook},
-        };
-
+        public readonly Dictionary<TypeOfRequest, Func<object, object>> handlerTranslator;
 
         public string GetAddress => (interSocket.RemoteEndPoint as IPEndPoint).Address.ToString();
 
@@ -59,12 +61,12 @@ namespace ServerHandling.HandleSocket
                     int msg = interSocket.Receive(dataBuffer);
 
                     byte[] replay = HandleRequest(Decode(dataBuffer, 0, msg));
-
-                    SendingData(replay);
+                    if (replay != null)
+                        SendingData(replay);
                 }
                 catch (SocketException)
                 {
-                    OnDisconnected?.Invoke(GetAddress);
+                    Disconnect();
                     return;
                 }
             }
@@ -91,16 +93,10 @@ namespace ServerHandling.HandleSocket
                 interSocket.Receive(waitBuffer);
 
                 interSocket.Send(data);
-                //int tempSizeSend = 0;
-                //for (int i = 0; i < length; i += bufferSize)
-                //{
-                //    tempSizeSend = length - i < bufferSize ? length - i : bufferSize;
-                //    interSocket.Send(data, i, tempSizeSend, SocketFlags.None);
-                //}
             }
             catch (SocketException)
             {
-                OnDisconnected?.Invoke(GetAddress);
+                Disconnect();
                 return;
             }
         }
@@ -108,6 +104,7 @@ namespace ServerHandling.HandleSocket
         public void Disconnect()
         {
             //Sending message to client that server is closing
+            OnDisconnected?.Invoke(this);
             interSocket.Shutdown(SocketShutdown.Both);
             interSocket.Close();
         }
@@ -115,6 +112,12 @@ namespace ServerHandling.HandleSocket
         public byte[] HandleRequest(string request)
         {
             var result = UserServerRequest.HandleRequest(request);
+
+            if (result.Type == TypeOfRequest.StopConnecting)
+            {
+                Disconnect();
+                return null;
+            }
 
             if (handlerTranslator.TryGetValue(result.Type, out var handler))
             {
@@ -129,77 +132,110 @@ namespace ServerHandling.HandleSocket
 
         //Handle sign up request
         //Return the result back to client
-        public static string HandleSignUp(object user)
+        public string HandleSignUp(object user)
         {
             //Get result after inserting to sql
             var result = DatabaseManager.Init.InsertNewUser(user as User);
 
             //Send message back to client depending on the result
             if (result)
+            {
+                OnActivity?.Invoke(GetAddress + " has created a new account with user name " + (user as User).UserName);
                 return succesMessage;
+            }
             else
                 return failMessage;
         }
 
         //Handle sign in request
         //Return the result back to client
-        public static string HandleSignIn(object user)
+        public string HandleSignIn(object user)
         {
             var result = DatabaseManager.Init.CheckLogin(user as User);
 
             if (result)
+            {
+                this.user = (user as User).UserName;
+                OnActivity?.Invoke(GetAddress + " has logged in with user name " + this.user);
                 return succesMessage;
+            }
             else
                 return failMessage;
         }
 
         //Handle search books by its id
         //Return a json of BookList object
-        public static string HandleSearchBookByID(object ID)
+        public string HandleSearchBookByID(object ID)
         {
             try
             {
                 var books = DatabaseManager.Init.GetBookByID(int.Parse(ID as string));
+                OnActivity?.Invoke(user + " has searched for books by id " + ID);
                 return UserServerRequest.SeralizeMessage(books);
             }
             catch
             {
-                return succesMessage;
+                return failMessage;
             }
         }
 
 
         //Handle search books by its name
         //Return a json of BookList object
-        public static string HandleSearchBookByName(object bookName)
+        public string HandleSearchBookByName(object bookName)
         {
-            var books = DatabaseManager.Init.GetBookByName(bookName as string);
-            return UserServerRequest.SeralizeMessage(books);
+            try
+            {
+                var books = DatabaseManager.Init.GetBookByName(bookName as string);
+                OnActivity?.Invoke(user + " has searched for books by name " + bookName);
+                return UserServerRequest.SeralizeMessage(books);
+            }
+            catch
+            {
+                return failMessage;
+            }
         }
 
 
         //Handle search books by its author
         //Return a json of BookList object
-        public static string HandleSearchBookByAuthor(object authorName)
+        public string HandleSearchBookByAuthor(object authorName)
         {
-            var books = DatabaseManager.Init.GetBookByAuthor(authorName as string);
-            return UserServerRequest.SeralizeMessage(books);
+            try
+            {
+                var books = DatabaseManager.Init.GetBookByAuthor(authorName as string);
+                OnActivity?.Invoke(user + " has searched for books by author " + authorName);
+                return UserServerRequest.SeralizeMessage(books);
+            }
+            catch
+            {
+                return failMessage;
+            }
         }
 
         //Handle search books by its type
         //Return a json of BookList object
-        public static string HandleSearchBookByType(object typeName)
+        public string HandleSearchBookByType(object typeName)
         {
-            var books = DatabaseManager.Init.GetBookByType(typeName as string);
-            return UserServerRequest.SeralizeMessage(books);
+            try
+            {
+                var books = DatabaseManager.Init.GetBookByType(typeName as string);
+                OnActivity?.Invoke(user + " has searched for books by genre " + typeName);
+                return UserServerRequest.SeralizeMessage(books);
+            }
+            catch
+            {
+                return failMessage;
+            }
         }
 
-        public static string HandleReadBook(object bookID)
+        public string HandleReadBook(object bookID)
         {
             try
             {
                 var path = DatabaseManager.Init.GetPathOfBook(int.Parse(bookID as string));
                 path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"\Database\Books\" + path + @".txt";
+                OnActivity?.Invoke(user + " has read a book whose id " + bookID);
                 return File.ReadAllText(path);
             }
             catch (Exception)
@@ -208,12 +244,13 @@ namespace ServerHandling.HandleSocket
             }
         }
 
-        public static byte[] HandleDownloadBook(object bookID)
+        public byte[] HandleDownloadBook(object bookID)
         {
             try
             {
                 var path = DatabaseManager.Init.GetPathOfBook((int)bookID);
                 path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"Database\Books\" + path + @".txt";
+                OnActivity?.Invoke(user + " has downloaded a book whose id " + bookID);
                 return File.ReadAllBytes(path);
             }
             catch (Exception)
@@ -221,5 +258,6 @@ namespace ServerHandling.HandleSocket
                 return Encode(failMessage);
             }
         }
+
     }
 }

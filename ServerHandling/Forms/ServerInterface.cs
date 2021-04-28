@@ -13,6 +13,7 @@ namespace ServerHandling
         public ServerInterface()
         {
             serverSocketManager = new HandleSocket.ServerSocketManager();
+            Application.ApplicationExit += (o, e) => ExitProgram();
             InitializeComponent();
             SetupServerInformationComponent();
         }
@@ -23,22 +24,14 @@ namespace ServerHandling
             Application.Exit();
         }
 
-        private void CloseProgramButton_Click(object sender, EventArgs e)
-        {
-            ExitProgram();
-        }
-
-        private void HideProgramButton_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
+    
 
         private void SetupServerInformationComponent()
         {
             //Let control call back to set up server
             serverInformationControl.OnConnectButtonClick += SetupConnectingServer;
             serverInformationControl.OnDisconnectButtonClick += DisconnectServer;
-            serverSocketManager.OnPrintMessage += (m) => MessageBox.Show(m);
+            serverSocketManager.OnPrintMessage += serverInformationControl.ShowTasks;
         }
 
         public ServerState SetupConnectingServer()
@@ -48,13 +41,7 @@ namespace ServerHandling
 
         public void DisconnectServer()
         {
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var a = File.ReadAllText(@"D:\Source\Socket\ServerHandling\Database\Books\Computer.Networking.A.TopDown.Approach.6th.Edition.txt");
-
-            richTextBox1.Text = a;
+            serverSocketManager.DisconnectAll();
         }
     }
 }

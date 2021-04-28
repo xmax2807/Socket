@@ -57,6 +57,12 @@ namespace ServerHandling.Controls
             //Can connect again
             openConnectionButton.Enabled = true;
         }
+
+        public void ShowTasks(string newTask)
+        {
+            serverRecentTasks.AppendText(newTask + " (" + DateTime.Now + ")\n");
+        }
+
     }
 
     public struct ServerState

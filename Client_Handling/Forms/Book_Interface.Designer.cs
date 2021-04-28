@@ -210,6 +210,7 @@
             this.Download.UseVisualStyleBackColor = true;
             this.Download.MouseEnter += new System.EventHandler(this.Download_Button_Enter);
             this.Download.MouseLeave += new System.EventHandler(this.Download_Button_Leave);
+            this.Download.Click += new System.EventHandler(this.DownloadBook);
             // 
             // Book_Interface
             // 

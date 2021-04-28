@@ -19,7 +19,6 @@ namespace Client_Handling.Forms
         public ListBook_Interface()
         {
             InitializeComponent();
-            this.BookContainer.Controls.Add(new Book_Interface());
         }
 
         private void Back_MouseEnter(object sender, EventArgs e)
@@ -37,21 +36,15 @@ namespace Client_Handling.Forms
         }
 
         // add books
-        public System.Action<string>[] AddBook(CommonResource.BookList input)
+        public void AddBook(CommonResource.BookList input, Action<string> callback_read, Action<string,string> callback_download)
         {
-            System.Action<string>[] eventLoadBooks = new Action<string>[input.Books.Count];
             for (int i = 0; i < input.Books.Count; i++)
             {
                 var newShow = new Book_Interface(input.Books[i]);
-                eventLoadBooks[i] = newShow.give_info;
+                newShow.OnRead += callback_read;
+                newShow.OnDownload += callback_download;
+                this.BookContainer.Controls.Add(newShow);
             }
-            return eventLoadBooks;
-        }
-
-        //Choose
-        public string Choose()
-        {
-            return "";
         }
     }
 }

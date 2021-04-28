@@ -22,10 +22,10 @@ namespace CommonResource
     public class Book
     {
         public int ID { get; set; } = 0;
-        public string Name { get; }
-        public string Author { get; }
-        public string Type { get; }
-        public string Year { get; }
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public string Type { get; set; }
+        public string Year { get; set; }
 
         public Book(int id, string name, string author, string type, string year)
         {
@@ -40,7 +40,7 @@ namespace CommonResource
     [Serializable]
     public class BookList
     {
-        public List<Book> Books { get; }
+        public List<Book> Books { get; set; }
 
         public BookList(List<Book> books)
         {

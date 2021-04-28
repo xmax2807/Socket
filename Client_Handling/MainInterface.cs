@@ -19,7 +19,7 @@ namespace Client_Handling
         public Form1()
         {
             InitializeComponent();
-            active = listBook_Interface1;
+            active = connect_toHost1;
             active.Visible = true;
 
             client.OnShow += s => MessageBox.Show(s);
@@ -82,12 +82,7 @@ namespace Client_Handling
         private void Display_listBook(CommonResource.BookList list)
         {
             //int size_list = client.bookList.Books.Count;
-            var eventLoad = listBook_Interface1.AddBook(list);
-            for (int i = 0; i < eventLoad.Length; i++)
-            {
-                eventLoad[i] += (id) => client.Read_Book(id);
-            }
-
+            listBook_Interface1.AddBook(list, client.Read_Book,client.download);
             //for(int i = 0; i < size_list; i++)
             //{
               //  this.listBook_Interface1.AddBook(client.bookList.Books[i]);
@@ -98,6 +93,7 @@ namespace Client_Handling
         {
             this.bookDisplay1.Visible = true;
             this.bookDisplay1.get_data(Data);
+            this.bookDisplay1.BringToFront();
         }
 
 

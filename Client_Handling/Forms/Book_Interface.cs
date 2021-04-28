@@ -12,8 +12,8 @@ namespace Client_Handling.Forms
 {
     public partial class Book_Interface : UserControl
     {
-        public event EventHandler Choose;
-        public Action<string> give_info;
+        public Action<string> OnRead;
+        public Action<string,string> OnDownload;
         private string id;
         public Book_Interface()
         {
@@ -29,6 +29,7 @@ namespace Client_Handling.Forms
             this.NameBook.Text = input.Name;
             this.AuthorName.Text = input.Author;
             this.GenreName.Text = input.Type;
+            this.YearText.Text = input.Year;
             id = input.ID.ToString();
             this.Dock = System.Windows.Forms.DockStyle.Top;
             this.Visible = true;
@@ -37,7 +38,12 @@ namespace Client_Handling.Forms
         //Choose
         public void ChooseBook(object sender, EventArgs e)
         {
-            give_info?.Invoke(id);
+            OnRead?.Invoke(id);
+        }
+
+        public void DownloadBook(object sender, EventArgs e)
+        {
+            OnDownload?.Invoke(id, @"C:\Users\ACER\Desktop\");
         }
 
         private void NameBook_MouseEnter(object sender, EventArgs e)
@@ -62,6 +68,5 @@ namespace Client_Handling.Forms
         {
             this.Download.Cursor = System.Windows.Forms.Cursors.Default;
         }
-
     }
 }

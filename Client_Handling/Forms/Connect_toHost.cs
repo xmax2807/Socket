@@ -18,6 +18,7 @@ namespace Client_Handling.Forms
         public Connect_toHost()
         {
             InitializeComponent();
+            
         }
 
         private bool check_input_IPOnly(string input)
@@ -36,6 +37,7 @@ namespace Client_Handling.Forms
 
         public void Connect_enter(object sender, KeyEventArgs e)
         {
+            Auto_Hide();
             if(e.KeyCode == Keys.Enter)
             {
                 if (check_input_IPOnly(this.IP.Text))
@@ -44,6 +46,14 @@ namespace Client_Handling.Forms
                 {
                     this.label1.Text = "IP must contain number only. Please check again the IP address";
                 }
+            }
+        }
+
+        private void Auto_Hide()
+        {
+            if (this.IP.Focused)
+            {
+                this.label1.Text = "";
             }
         }
 

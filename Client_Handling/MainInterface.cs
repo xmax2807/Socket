@@ -15,15 +15,19 @@ namespace Client_Handling
         private Time_Client_Manager client = new Time_Client_Manager();
         UserControl active;
         string get_function;
+
         public Form1()
         {
             InitializeComponent();
-            active = connect_toHost1;
+            active = listBook_Interface1;
+            active.Visible = true;
             
             SignUp();
             SignIn();
             ConnectHost();
         }
+
+
         public void ConnectHost()
         {
             this.connect_toHost1.connect += (IP) => client.connect(IP);
@@ -72,7 +76,7 @@ namespace Client_Handling
                         break;
                     }
             }
-            client.Search_Book(typereq + "|" +this.SearchBar.Text);
+            client.Search_Book(typereq + "|" + this.SearchBar.Text);
         }
 
         private void Display_listBook()
@@ -103,15 +107,6 @@ namespace Client_Handling
                 this.SearchBar.ForeColor = Color.Gray;
             }
 
-        }
-
-        // exit
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            //disconnect first
-
-            //
-            Application.Exit();
         }
 
         private void pictureBox1_MouseHover(object sender, EventArgs e)
@@ -231,7 +226,40 @@ namespace Client_Handling
             Show_Back(sender);
         }
 
+
+        // exit
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            //disconnect first
+
+            //
+            Application.Exit();
+        }
+
+        // Window moving
+        private bool isHolding = false;
+        private Point Current_Mouse = Point.Empty;
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            Current_Mouse = e.Location;
+            isHolding = true;
+        }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            isHolding = false;
+        }
        
-        
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isHolding)
+            {
+                
+                this.Location = new Point(e.X + this.Location.X  - Current_Mouse.X,
+                                           e.Y + this.Location.Y - Current_Mouse.Y);
+                
+            }
+        }
     }
 }

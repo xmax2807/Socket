@@ -13,9 +13,11 @@ namespace Client_Handling.Forms
     public partial class ListBook_Interface : UserControl
     {
         public event EventHandler Close;
+        
         public ListBook_Interface()
         {
             InitializeComponent();
+            this.BookContainer.Controls.Add(new Book_Interface());
         }
 
         private void Back_MouseEnter(object sender, EventArgs e)
@@ -37,5 +39,9 @@ namespace Client_Handling.Forms
         {
             this.BookContainer.Controls.Add(new Book_Interface(input));
         }
+
+        //Choose
+        
+
     }
 }

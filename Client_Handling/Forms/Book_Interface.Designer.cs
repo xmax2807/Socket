@@ -58,14 +58,18 @@
             // 
             // NameBook
             // 
-            this.NameBook.BackColor = System.Drawing.Color.Silver;
+            this.NameBook.BackColor = System.Drawing.Color.Transparent;
             this.NameBook.Dock = System.Windows.Forms.DockStyle.Top;
             this.NameBook.Font = new System.Drawing.Font("Maiandra GD", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NameBook.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.NameBook.Location = new System.Drawing.Point(198, 0);
             this.NameBook.Name = "NameBook";
             this.NameBook.Size = new System.Drawing.Size(601, 34);
             this.NameBook.TabIndex = 2;
             this.NameBook.Text = "Default";
+            this.NameBook.Click += new System.EventHandler(this.ChooseBook);
+            this.NameBook.MouseEnter += new System.EventHandler(this.NameBook_MouseEnter);
+            this.NameBook.MouseLeave += new System.EventHandler(this.NameBook_MouseLeave);
             // 
             // Info_Panel
             // 
@@ -78,7 +82,7 @@
             // 
             // Info
             // 
-            this.Info.BackColor = System.Drawing.Color.FromArgb(150, System.Drawing.Color.White);
+            this.Info.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Info.ColumnCount = 2;
             this.Info.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.Info.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());

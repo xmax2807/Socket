@@ -38,7 +38,7 @@ namespace ServerHandling.HandleSocket
             };
         }
 
-        public event System.Action<IntermediateSocket> OnDisconnected;
+        public event System.Action<IntermediateSocket> OnDisconnectedByClient;
 
         public const string succesMessage = "1";
 
@@ -68,7 +68,7 @@ namespace ServerHandling.HandleSocket
                 }
                 catch (SocketException)
                 {
-                    Disconnect();
+                    Disconnect(false);
                     return;
                 }
             }
@@ -98,19 +98,25 @@ namespace ServerHandling.HandleSocket
             }
             catch (SocketException)
             {
-                Disconnect();
+                Disconnect(false);
                 return;
             }
         }
 
-        public void Disconnect()
+        //Disconnect this socket
+        //Determine it's from server or client
+        public void Disconnect(bool manual)
         {
-            //Sending message to client that server is closing
-            OnActivity?.Invoke(user + " disconnected");
-            OnDisconnected?.Invoke(this);
             if (IsConnected)
+            {
+                //Sending message to client that server is closing
+                //If be destroyed from client
+                if (!manual)
+                    OnDisconnectedByClient?.Invoke(this);
+
                 interSocket.Shutdown(SocketShutdown.Both);
-            interSocket.Close();
+                interSocket.Close();
+            }
         }
 
         public byte[] HandleRequest(string request)
@@ -119,7 +125,7 @@ namespace ServerHandling.HandleSocket
 
             if (result.Type == TypeOfRequest.StopConnecting)
             {
-                Disconnect();
+                Disconnect(false);
                 return null;
             }
 

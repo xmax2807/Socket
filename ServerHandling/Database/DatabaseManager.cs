@@ -14,7 +14,7 @@ namespace ServerHandling.Database
 
         public static DatabaseManager Init => lazySingleton.Value;
 
-        private readonly string sqlConnectionString = @"Data Source=NHATLINH\SQLPROJECT;Initial Catalog=online_library;User ID=sa;Password=1905;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private readonly string sqlConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Source\Socket\ServerHandling\Database\online_library.mdf;Integrated Security=True";
 
         private readonly SqlConnection sqlConnection;
 

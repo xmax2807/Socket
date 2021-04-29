@@ -170,9 +170,10 @@
             // serverRecentTasks
             // 
             this.serverRecentTasks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverRecentTasks.Enabled = false;
             this.serverRecentTasks.Location = new System.Drawing.Point(0, 94);
             this.serverRecentTasks.Name = "serverRecentTasks";
+            this.serverRecentTasks.ReadOnly = true;
+            this.serverRecentTasks.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.serverRecentTasks.Size = new System.Drawing.Size(800, 406);
             this.serverRecentTasks.TabIndex = 12;
             this.serverRecentTasks.Text = "";

@@ -75,11 +75,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Forms\BookDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\BookDisplay.Designer.cs">
+      <DependentUpon>BookDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Book_Interface.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Book_Interface.Designer.cs">
+      <DependentUpon>Book_Interface.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Connect_toHost.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Connect_toHost.Designer.cs">
       <DependentUpon>Connect_toHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ListBook_Interface.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ListBook_Interface.Designer.cs">
+      <DependentUpon>ListBook_Interface.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Sign_in_up.cs">
       <SubType>UserControl</SubType>
@@ -99,8 +117,17 @@
     <Compile Include="Watermark.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\BookDisplay.resx">
+      <DependentUpon>BookDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Book_Interface.resx">
+      <DependentUpon>Book_Interface.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Connect_toHost.resx">
       <DependentUpon>Connect_toHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ListBook_Interface.resx">
+      <DependentUpon>ListBook_Interface.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sign_in_up.resx">
       <DependentUpon>Sign_in_up.cs</DependentUpon>

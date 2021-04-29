@@ -17,7 +17,7 @@ namespace ServerHandling.HandleSocket
         private readonly List<IntermediateSocket> interSocks = new List<IntermediateSocket>();
 
         //A socket listening requests to connect
-        private Socket listenSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private Socket listenSock;
 
         //Address of listen socket
         private readonly IPEndPoint serverEndPoint;
@@ -57,9 +57,10 @@ namespace ServerHandling.HandleSocket
                     //Mark that server is opened
                     isOpened = true;
 
-                    listenSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-                    listenSock.LingerState = new LingerOption(false, 0);
+                    listenSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
+                    {
+                        LingerState = new LingerOption(false, 0)
+                    };
 
                     //Bind an endpoint for server
                     listenSock.Bind(serverEndPoint);
@@ -108,12 +109,13 @@ namespace ServerHandling.HandleSocket
                 //Mark that the connection is closed
                 isOpened = false;
 
-                foreach (var conn in interSocks)
-                    conn.Disconnect();
+                foreach (var i in interSocks)
+                    i.Disconnect(true);
                 interSocks.Clear();
 
-                listenSock.Close();
+                var temp = listenSock;
                 listenSock = null;
+                temp.Close();
 
                 OnPrintMessage?.Invoke("Disconnnect all client");
             }
@@ -139,7 +141,11 @@ namespace ServerHandling.HandleSocket
 
                 interSock.OnActivity += OnPrintMessage;
 
-                interSock.OnDisconnected += (a) => interSocks.Remove(a);
+                interSock.OnDisconnectedByClient += (a) =>
+                {
+                    OnPrintMessage?.Invoke(a.user + " disconnected");
+                    interSocks.Remove(a);
+                };
 
                 interSock.ReceivingData();
             }

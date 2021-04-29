@@ -33,6 +33,7 @@
             // 
             // serverInformationControl
             // 
+            this.serverInformationControl.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.serverInformationControl.BackColor = System.Drawing.Color.White;
             this.serverInformationControl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.serverInformationControl.Dock = System.Windows.Forms.DockStyle.Fill;

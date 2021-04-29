@@ -149,7 +149,7 @@
             this.disconnectButton.Name = "disconnectButton";
             this.disconnectButton.Size = new System.Drawing.Size(225, 43);
             this.disconnectButton.TabIndex = 11;
-            this.disconnectButton.Text = "Ngắt Kết Nối Server";
+            this.disconnectButton.Text = "Disconnect";
             this.disconnectButton.UseVisualStyleBackColor = false;
             this.disconnectButton.Click += new System.EventHandler(this.DisconnectButton_Click);
             // 
@@ -163,7 +163,7 @@
             this.openConnectionButton.Name = "openConnectionButton";
             this.openConnectionButton.Size = new System.Drawing.Size(225, 47);
             this.openConnectionButton.TabIndex = 10;
-            this.openConnectionButton.Text = "Mở Kết Nối Server";
+            this.openConnectionButton.Text = "Connect";
             this.openConnectionButton.UseVisualStyleBackColor = false;
             this.openConnectionButton.Click += new System.EventHandler(this.OpenConnectionButton_Click);
             // 

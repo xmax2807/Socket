@@ -16,6 +16,7 @@ namespace Client_Handling
         private Time_Client_Manager client = new Time_Client_Manager();
         UserControl active;
         string get_function = "Title";
+        
 
         public Form1()
         {
@@ -34,7 +35,16 @@ namespace Client_Handling
 
         public void ConnectHost()
         {
-            this.connect_toHost1.connect += (IP) => client.connect(IP);
+            this.connect_toHost1.connect += (IP) =>
+            {
+                if (client.connect(IP))
+                {
+                    HideAll();
+                    active = SignUpBox;
+                    active.Visible = true;
+                }
+            };
+
         }
         public void SignUp()
         {
@@ -42,7 +52,16 @@ namespace Client_Handling
         }
         public void SignIn()
         {
-            SignUpBox.SignIn += (u) => client.sign_in(u.UserName, u.Password);
+            SignUpBox.SignIn += (u) =>
+            {
+                if (client.sign_in(u.UserName, u.Password))
+                {
+                    HideAll();
+                    active = listBook_Interface1;
+                    active.Visible = true;
+                }
+            };
+
         }
 
         public void Switch_Function()
@@ -70,11 +89,6 @@ namespace Client_Handling
                 case "Genre":
                     {
                         typereq = CommonResource.TypeOfRequest.SearchBookByType.ToString();
-                        break;
-                    }
-                case "Year":
-                    {
-                        typereq = CommonResource.TypeOfRequest.SearchBooksByAuthor.ToString();// Year;
                         break;
                     }
             }
@@ -140,6 +154,11 @@ namespace Client_Handling
             if (!client.SocketConnected())
             {
                 MessageBox.Show("Can't connect to server");
+                return;
+            }
+            if (!client.is_signin)
+            {
+                MessageBox.Show("You must sign in before searching");
                 return;
             }
             HideAll();
@@ -242,6 +261,9 @@ namespace Client_Handling
         private void Disconnect_Click(object sender, EventArgs e)
         {
             client.disconnect();
+            HideAll();
+            active = this.connect_toHost1;
+            active.Visible = true;
         }
         //
 

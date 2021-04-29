@@ -20,6 +20,7 @@ namespace Client_Handling
         public event System.Action<string> OnShow;
 
         private IPEndPoint client_IP;
+        public bool is_signin {get; private set;} = false;
         public Time_Client_Manager()
         {
             string host_name = Dns.GetHostName();
@@ -43,18 +44,24 @@ namespace Client_Handling
             else
                 return true;
         }
-        public void connect(string IP)
+        public bool connect(string IP)
         {
-            client_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
-                if (SocketConnected()) { OnShow?.Invoke("Already connected"); return; }
+                if (SocketConnected())
+                {
+                    OnShow?.Invoke("Already connected"); return true;
+                }
+                
+                client_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 client_socket.Connect(IPAddress.Parse(IP), 11111);
                 OnShow?.Invoke("Connect sucessfully");
+                return true;
             }
             catch (SocketException e)
             {
                 OnShow?.Invoke(e.Message);
+                return false;
             }
         }
 
@@ -62,13 +69,13 @@ namespace Client_Handling
         {
             try
             {
-                
                 if (!SocketConnected()) return;
                 client_socket.Send(Encoding.Unicode.GetBytes(TypeOfRequest.StopConnecting.ToString()));
                 client_socket.Shutdown(SocketShutdown.Both);
                 client_socket.Close();
                 client_socket = null;
 
+                is_signin = false;
                 OnShow?.Invoke("Disconnected from server");
             }
             catch(SocketException e)
@@ -127,19 +134,29 @@ namespace Client_Handling
             };
         }
 
-        public void sign_in(string username, string pass)
+        public bool sign_in(string username, string pass)
         {
             var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignIn);
             try 
             {
                 if (send_data(req) == "1")
-                    OnShow?.Invoke("Sign up sucessfully");
+                {
+                    OnShow?.Invoke("Sign in sucessfully");
+                    is_signin = true;
+                    return true;
+                }
                 else
-                    OnShow?.Invoke("Sign up unsucessfully");
+                {
+                    OnShow?.Invoke("Sign in unsucessfully");
+                    is_signin = false;
+                    return false;
+                }
             }
             catch (SocketException e)
             {
                 OnShow?.Invoke(e.Message);
+                is_signin = false;
+                return false;
             };
         }
 

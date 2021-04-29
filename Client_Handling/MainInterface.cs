@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace Client_Handling
 {
@@ -14,12 +15,12 @@ namespace Client_Handling
     {
         private Time_Client_Manager client = new Time_Client_Manager();
         UserControl active;
-        string get_function;
+        string get_function = "Title";
 
         public Form1()
         {
             InitializeComponent();
-            active = connect_toHost1;
+            active = this.connect_toHost1;
             active.Visible = true;
 
             client.OnShow += s => MessageBox.Show(s);
@@ -52,6 +53,7 @@ namespace Client_Handling
             {
                 case "ID":
                     {
+
                         typereq = CommonResource.TypeOfRequest.SearchBooksByID.ToString();
                         break;
                     }
@@ -76,6 +78,7 @@ namespace Client_Handling
                         break;
                     }
             }
+            
             client.Search_Book(typereq + "|" + this.SearchBar.Text);
         }
 
@@ -96,7 +99,10 @@ namespace Client_Handling
             this.bookDisplay1.BringToFront();
         }
 
-
+        private void Close_window(object sender, EventArgs e)
+        {
+            this.bookDisplay1.Visible = false;
+        }
 
         //Interface + Interaction
         private void Search_box_focus(object sender, EventArgs e)
@@ -137,18 +143,21 @@ namespace Client_Handling
                 return;
             }
             HideAll();
+            if(get_function == "ID" && this.SearchBar.Text.Length > 0)
+            {
+                if (Regex.Matches(this.SearchBar.Text, @"[0-9]").Count < SearchBar.Text.Length)
+                {
+                    MessageBox.Show("ID must a positive number");
+                    return;
+                }
+
+            }
             Switch_Function();
+            
             active = this.listBook_Interface1;
             active.Visible = true;
         }
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                // Search
-                search_button.Click += new System.EventHandler(search_Click);
-            }
-        }
+        
         //
 
         // some fx in text box
@@ -220,6 +229,21 @@ namespace Client_Handling
             
         }
         //
+        //Disconnect
+        private void Disconnect_MouseEnter(object sender, EventArgs e)
+        {
+            this.Disconnect_Button.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        }
+        private void Disconnect_MouseLeave(object sender, EventArgs e)
+        {
+            this.Disconnect_Button.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        }
+
+        private void Disconnect_Click(object sender, EventArgs e)
+        {
+            client.disconnect();
+        }
+        //
 
         //Back
         private void Show_Back(object sender)
@@ -239,7 +263,7 @@ namespace Client_Handling
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             //disconnect first
-
+            client.disconnect();
             //
             Application.Exit();
         }

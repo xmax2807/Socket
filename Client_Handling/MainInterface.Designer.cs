@@ -31,6 +31,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Disconnect_Button = new System.Windows.Forms.Button();
             this.Connect = new System.Windows.Forms.Button();
             this.Login = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -56,6 +57,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.panel1.Controls.Add(this.Disconnect_Button);
             this.panel1.Controls.Add(this.Connect);
             this.panel1.Controls.Add(this.Login);
             this.panel1.Controls.Add(this.listBox1);
@@ -67,9 +69,29 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1261, 130);
             this.panel1.TabIndex = 0;
-            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
-            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
-            this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
+            //this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            //this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
+            //this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
+            // 
+            // Disconnect_Button
+            // 
+            this.Disconnect_Button.AutoSize = true;
+            this.Disconnect_Button.BackColor = System.Drawing.Color.Transparent;
+            this.Disconnect_Button.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Disconnect_Button.FlatAppearance.BorderSize = 0;
+            this.Disconnect_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.Disconnect_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.Disconnect_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Disconnect_Button.Font = new System.Drawing.Font("Maiandra GD", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Disconnect_Button.Location = new System.Drawing.Point(369, 42);
+            this.Disconnect_Button.Name = "Disconnect_Button";
+            this.Disconnect_Button.Size = new System.Drawing.Size(99, 31);
+            this.Disconnect_Button.TabIndex = 3;
+            this.Disconnect_Button.Text = "Disconnect";
+            this.Disconnect_Button.UseVisualStyleBackColor = false;
+            this.Disconnect_Button.Click += new System.EventHandler(this.Disconnect_Click);
+            this.Disconnect_Button.MouseEnter += new System.EventHandler(this.Disconnect_MouseEnter);
+            this.Disconnect_Button.MouseLeave += new System.EventHandler(this.Disconnect_MouseLeave);
             // 
             // Connect
             // 
@@ -193,7 +215,6 @@
             this.SearchBar.TabIndex = 1;
             this.SearchBar.Text = "Type here to search";
             this.SearchBar.GotFocus += new System.EventHandler(this.Search_box_focus);
-            this.SearchBar.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             this.SearchBar.LostFocus += new System.EventHandler(this.Search_box_defocus);
             // 
             // search_button
@@ -241,13 +262,14 @@
             // 
             // bookDisplay1
             // 
+            this.bookDisplay1.BackColor = System.Drawing.Color.Transparent;
             this.bookDisplay1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bookDisplay1.Location = new System.Drawing.Point(0, 130);
             this.bookDisplay1.Name = "bookDisplay1";
             this.bookDisplay1.Size = new System.Drawing.Size(1261, 756);
             this.bookDisplay1.TabIndex = 4;
             this.bookDisplay1.Visible = false;
-            this.bookDisplay1.close += new System.EventHandler(this.Back_Click);
+            this.bookDisplay1.close += new System.EventHandler(this.Close_window);
             // 
             // listBook_Interface1
             // 
@@ -327,6 +349,7 @@
         private Forms.Connect_toHost connect_toHost1;
         private Forms.ListBook_Interface listBook_Interface1;
         private Forms.BookDisplay bookDisplay1;
+        private System.Windows.Forms.Button Disconnect_Button;
     }
 }
 

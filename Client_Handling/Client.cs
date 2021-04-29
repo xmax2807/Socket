@@ -12,7 +12,7 @@ namespace Client_Handling
 {
     class Time_Client_Manager
     {
-        private Socket client_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private Socket client_socket;
 
         public event Action<BookList> OnShowBookList;
         public event Action<string> OnLoadBook;
@@ -33,6 +33,8 @@ namespace Client_Handling
         
         public bool SocketConnected()
         {
+            if (client_socket == null) return false;
+
             bool part1 = client_socket.Poll(1000, SelectMode.SelectRead);
             bool part2 = (client_socket.Available == 0);
             bool part3 = client_socket.Connected;
@@ -43,9 +45,12 @@ namespace Client_Handling
         }
         public void connect(string IP)
         {
-            try {
-                if (SocketConnected()) return;
-                client_socket.Connect(IPAddress.Parse(IP), 11111); 
+            client_socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                if (SocketConnected()) { OnShow?.Invoke("Already connected"); return; }
+                client_socket.Connect(IPAddress.Parse(IP), 11111);
+                OnShow?.Invoke("Connect sucessfully");
             }
             catch (SocketException e)
             {
@@ -53,10 +58,23 @@ namespace Client_Handling
             }
         }
 
-        public static byte[] Encode(string req)
+        public void disconnect()
         {
-            byte[] buff = Encoding.Unicode.GetBytes(req);
-            return buff;
+            try
+            {
+                
+                if (!SocketConnected()) return;
+                client_socket.Send(Encoding.Unicode.GetBytes(TypeOfRequest.StopConnecting.ToString()));
+                client_socket.Shutdown(SocketShutdown.Both);
+                client_socket.Close();
+                client_socket = null;
+
+                OnShow?.Invoke("Disconnected from server");
+            }
+            catch(SocketException e)
+            {
+                OnShow?.Invoke(e.Message);
+            }
         }
         
         public string send_data(string req)
@@ -112,7 +130,8 @@ namespace Client_Handling
         public void sign_in(string username, string pass)
         {
             var req = User_req.Serialize(new CommonResource.User(username, pass), CommonResource.TypeOfRequest.SignIn);
-            try {
+            try 
+            {
                 if (send_data(req) == "1")
                     OnShow?.Invoke("Sign up sucessfully");
                 else
@@ -130,6 +149,8 @@ namespace Client_Handling
             try
             {
                 data = send_data(req);
+                if (data == "NULL")
+                    return;
                 OnShowBookList?.Invoke(User_req.Deserialize_list(data));
             }
             catch(SocketException e)
@@ -153,18 +174,17 @@ namespace Client_Handling
             
         }
 
-        public void download(string req, string path)
+        public byte[] download(string req)
         {
             try
             {
                 var data = send_data_get_bytes(CommonResource.TypeOfRequest.DownloadBook.ToString() + '|' + req);
-                System.IO.File.WriteAllBytes(path + "test.txt", data);
-                OnShow?.Invoke("Downloaded");
+                return data;
             }
             catch
             {
                 OnShow?.Invoke("Can't download");
-                return;
+                return null;
             }
         }
 

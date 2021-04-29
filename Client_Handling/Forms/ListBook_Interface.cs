@@ -36,8 +36,9 @@ namespace Client_Handling.Forms
         }
 
         // add books
-        public void AddBook(CommonResource.BookList input, Action<string> callback_read, Action<string,string> callback_download)
+        public void AddBook(CommonResource.BookList input, Action<string> callback_read, Func<string, byte[]> callback_download)
         {
+            this.BookContainer.Controls.Clear();
             for (int i = 0; i < input.Books.Count; i++)
             {
                 var newShow = new Book_Interface(input.Books[i]);
@@ -46,5 +47,6 @@ namespace Client_Handling.Forms
                 this.BookContainer.Controls.Add(newShow);
             }
         }
+
     }
 }

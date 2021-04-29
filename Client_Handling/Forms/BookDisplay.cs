@@ -33,6 +33,7 @@ namespace Client_Handling.Forms
 
         private void Back_Click(object sender, EventArgs e)
         {
+            this.richTextBox1.Text = "";
             close?.Invoke(sender, e);
         }
     }

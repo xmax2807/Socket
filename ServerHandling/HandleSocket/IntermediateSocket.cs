@@ -48,6 +48,8 @@ namespace ServerHandling.HandleSocket
 
         public string GetAddress => (interSocket.RemoteEndPoint as IPEndPoint).Address.ToString();
 
+        public bool IsConnected => interSocket.Connected;
+
         private readonly byte[] waitBuffer = new byte[1024];
 
         public void ReceivingData()
@@ -104,8 +106,10 @@ namespace ServerHandling.HandleSocket
         public void Disconnect()
         {
             //Sending message to client that server is closing
+            OnActivity?.Invoke(user + " disconnected");
             OnDisconnected?.Invoke(this);
-            interSocket.Shutdown(SocketShutdown.Both);
+            if (IsConnected)
+                interSocket.Shutdown(SocketShutdown.Both);
             interSocket.Close();
         }
 
@@ -234,7 +238,6 @@ namespace ServerHandling.HandleSocket
             try
             {
                 var path = DatabaseManager.Init.GetPathOfBook(int.Parse(bookID as string));
-                path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"\Database\Books\" + path + @".txt";
                 OnActivity?.Invoke(user + " has read a book whose id " + bookID);
                 return File.ReadAllText(path);
             }
@@ -248,8 +251,7 @@ namespace ServerHandling.HandleSocket
         {
             try
             {
-                var path = DatabaseManager.Init.GetPathOfBook((int)bookID);
-                path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"Database\Books\" + path + @".txt";
+                var path = DatabaseManager.Init.GetPathOfBook(int.Parse(bookID as string));
                 OnActivity?.Invoke(user + " has downloaded a book whose id " + bookID);
                 return File.ReadAllBytes(path);
             }

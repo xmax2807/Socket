@@ -62,7 +62,8 @@ namespace ServerHandling
             //Can't convert enum
             try
             {
-                var inforPart = parts[1]; //Json string or information
+                //Json string or information
+                var inforPart = parts.Length > 1 ? parts[1] : string.Empty;
 
                 var rq = TranslateRequest.GetRequestType(parts[0]);
 

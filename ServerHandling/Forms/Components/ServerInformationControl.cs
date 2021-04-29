@@ -10,6 +10,8 @@ namespace ServerHandling.Controls
 
         public event Action OnDisconnectButtonClick;
 
+        delegate void SetTextCallback(string text);
+
         public ServerInformationControl()
         {
             InitializeComponent();
@@ -58,9 +60,19 @@ namespace ServerHandling.Controls
             openConnectionButton.Enabled = true;
         }
 
-        public void ShowTasks(string newTask)
+
+        public void SetNewTask(string newTask)
         {
-            serverRecentTasks.AppendText(newTask + " (" + DateTime.Now + ")\n");
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.serverRecentTasks.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetNewTask);
+                this.Invoke(d, new object[] { newTask });
+            }
+            else
+                this.serverRecentTasks.AppendText(newTask + " (" + DateTime.Now + ")\n");
         }
 
     }

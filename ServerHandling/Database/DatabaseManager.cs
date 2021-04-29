@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Data.SqlClient;
 using CommonResource;
+using System.IO;
 
 namespace ServerHandling.Database
 {
@@ -275,7 +276,7 @@ namespace ServerHandling.Database
                     sqlConnection.Close();
 
                     if (path != null)
-                        return path.ToString();
+                        return Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"\Database\Books\" + path + ".txt";
                     return string.Empty;
                 }
             }

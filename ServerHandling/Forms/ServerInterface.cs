@@ -31,8 +31,9 @@ namespace ServerHandling
             //Let control call back to set up server
             serverInformationControl.OnConnectButtonClick += SetupConnectingServer;
             serverInformationControl.OnDisconnectButtonClick += DisconnectServer;
-            serverSocketManager.OnPrintMessage += serverInformationControl.ShowTasks;
+            serverSocketManager.OnPrintMessage += serverInformationControl.SetNewTask;
         }
+
 
         public ServerState SetupConnectingServer()
         {
@@ -42,6 +43,11 @@ namespace ServerHandling
         public void DisconnectServer()
         {
             serverSocketManager.DisconnectAll();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(Database.DatabaseManager.Init.GetPathOfBook(4));
         }
     }
 }

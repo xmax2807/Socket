@@ -59,6 +59,8 @@ namespace ServerHandling.HandleSocket
 
                     listenSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
+                    listenSock.LingerState = new LingerOption(false, 0);
+
                     //Bind an endpoint for server
                     listenSock.Bind(serverEndPoint);
 
@@ -92,8 +94,9 @@ namespace ServerHandling.HandleSocket
             {
                 listenSock.BeginAccept(new AsyncCallback(AcceptConnectingCallback), null);
             }
-            catch (SocketException)
+            catch (SocketException s)
             {
+                OnPrintMessage?.Invoke(s.Message);
                 return;
             }
         }
@@ -107,33 +110,39 @@ namespace ServerHandling.HandleSocket
 
                 foreach (var conn in interSocks)
                     conn.Disconnect();
-                listenSock.Close();
-                OnPrintMessage?.Invoke("Disconnnect all client");
                 interSocks.Clear();
+
+                listenSock.Close();
+                listenSock = null;
+
+                OnPrintMessage?.Invoke("Disconnnect all client");
             }
         }
 
         private void AcceptConnectingCallback(IAsyncResult async)
         {
-            //Callback to continue accepting incoming connections
-            StartAccepting();
+            if (listenSock != null)
+            {
+                //Callback to continue accepting incoming connections
+                StartAccepting();
 
-            var socket = listenSock.EndAccept(async);
+                var socket = listenSock.EndAccept(async);
 
-            //Create an instance/new thread to handle new client
-            var interSock = new IntermediateSocket(socket);
+                //Create an instance/new thread to handle new client
+                var interSock = new IntermediateSocket(socket);
 
 
-            //Add to manager
-            interSocks.Add(interSock);
+                //Add to manager
+                interSocks.Add(interSock);
 
-            OnPrintMessage?.Invoke("Connected by " + interSock.GetAddress);
+                OnPrintMessage?.Invoke("Connected by " + interSock.GetAddress);
 
-            interSock.OnActivity += OnPrintMessage;
+                interSock.OnActivity += OnPrintMessage;
 
-            interSock.OnDisconnected += (a) => interSocks.Remove(a);
+                interSock.OnDisconnected += (a) => interSocks.Remove(a);
 
-            interSock.ReceivingData();
+                interSock.ReceivingData();
+            }
         }
     }
 }

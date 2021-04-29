@@ -82,6 +82,7 @@ namespace ServerHandling.HandleSocket
             } //Catch an socket exception
             catch (SocketException)
             {
+                isOpened = false;
                 OnPrintMessage?.Invoke("Can't open the connection of server");
                 return new ServerState(null, false);
             }
@@ -143,7 +144,7 @@ namespace ServerHandling.HandleSocket
 
                 interSock.OnDisconnectedByClient += (a) =>
                 {
-                    OnPrintMessage?.Invoke(a.user + " disconnected");
+                    OnPrintMessage?.Invoke(a.GetAddress + " disconnected");
                     interSocks.Remove(a);
                 };
 
